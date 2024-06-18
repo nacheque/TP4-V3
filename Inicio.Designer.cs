@@ -37,47 +37,34 @@
             this.titClientesPrestamos = new System.Windows.Forms.Label();
             this.titClientesPlazosFijos = new System.Windows.Forms.Label();
             this.titClientesTarjetas = new System.Windows.Forms.Label();
-            this.titPedidoMedia = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
             this.titCajas = new System.Windows.Forms.Label();
             this.titPlazosFijos = new System.Windows.Forms.Label();
             this.titTajCred = new System.Windows.Forms.Label();
             this.titAtencPersonaliz = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
             this.titPrestamos = new System.Windows.Forms.Label();
             this.titServAdicional = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
             this.titEventoLlegClienteCaja = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.txtLLegadaCaja = new System.Windows.Forms.TextBox();
             this.titLlegClieAtPerson = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.txtLLegadaAtPers = new System.Windows.Forms.TextBox();
             this.titLlegCliTarjCred = new System.Windows.Forms.Label();
             this.titLegCliPlazoFijos = new System.Windows.Forms.Label();
             this.titLlegCliPrestamas = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.txtLLegadaPrestamos = new System.Windows.Forms.TextBox();
+            this.txtLLegadaPlazoFijo = new System.Windows.Forms.TextBox();
+            this.txtLLegadaTarjeta = new System.Windows.Forms.TextBox();
             this.titFinCaja = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.txtFinPlazoFijo = new System.Windows.Forms.TextBox();
+            this.txtFinTarjeta = new System.Windows.Forms.TextBox();
+            this.txtFinAtPers = new System.Windows.Forms.TextBox();
+            this.txtFinCaja = new System.Windows.Forms.TextBox();
             this.titFinAtPers = new System.Windows.Forms.Label();
             this.titFinPrestamos = new System.Windows.Forms.Label();
             this.titFinPlazoFijo = new System.Windows.Forms.Label();
             this.titFinTarj = new System.Windows.Forms.Label();
-            this.textBox21 = new System.Windows.Forms.TextBox();
-            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.txtFinServicioAdicional = new System.Windows.Forms.TextBox();
+            this.txtFinPrestamo = new System.Windows.Forms.TextBox();
             this.titFinAtServAdicional = new System.Windows.Forms.Label();
             this.titServAdicionalEntran = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -91,8 +78,10 @@
             this.txtInicioSim = new System.Windows.Forms.Label();
             this.buttonInicioSim = new System.Windows.Forms.Button();
             this.txtIniciaDesde = new System.Windows.Forms.Label();
-            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.txtNroDesdeFila = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtNroFilaTotal = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -185,71 +174,6 @@
             this.titClientesTarjetas.TabIndex = 8;
             this.titClientesTarjetas.Text = "Clientes para Tarjetas";
             // 
-            // titPedidoMedia
-            // 
-            this.titPedidoMedia.AutoSize = true;
-            this.titPedidoMedia.Location = new System.Drawing.Point(299, 110);
-            this.titPedidoMedia.Name = "titPedidoMedia";
-            this.titPedidoMedia.Size = new System.Drawing.Size(85, 13);
-            this.titPedidoMedia.TabIndex = 9;
-            this.titPedidoMedia.Text = "Ingrese la Media";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(297, 134);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(86, 20);
-            this.textBox1.TabIndex = 10;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(297, 157);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(86, 20);
-            this.textBox2.TabIndex = 11;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(297, 180);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(86, 20);
-            this.textBox3.TabIndex = 12;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(297, 206);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(86, 20);
-            this.textBox4.TabIndex = 13;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(297, 232);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(86, 20);
-            this.textBox5.TabIndex = 14;
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(296, 343);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(86, 20);
-            this.textBox6.TabIndex = 15;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(296, 369);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(86, 20);
-            this.textBox7.TabIndex = 16;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(296, 397);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(86, 20);
-            this.textBox8.TabIndex = 17;
-            // 
             // titCajas
             // 
             this.titCajas.AutoSize = true;
@@ -290,20 +214,6 @@
             this.titAtencPersonaliz.TabIndex = 21;
             this.titAtencPersonaliz.Text = "Atención Personalizada 1-2-3";
             // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(296, 423);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(86, 20);
-            this.textBox9.TabIndex = 23;
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(296, 449);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(86, 20);
-            this.textBox10.TabIndex = 24;
-            // 
             // titPrestamos
             // 
             this.titPrestamos.AutoSize = true;
@@ -324,13 +234,6 @@
             this.titServAdicional.TabIndex = 26;
             this.titServAdicional.Text = "Servicio Adicional  1 - 2";
             // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(296, 475);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(86, 20);
-            this.textBox11.TabIndex = 27;
-            // 
             // titEventoLlegClienteCaja
             // 
             this.titEventoLlegClienteCaja.AutoSize = true;
@@ -341,21 +244,12 @@
             this.titEventoLlegClienteCaja.TabIndex = 28;
             this.titEventoLlegClienteCaja.Text = "Llegada de Clientes para Caja";
             // 
-            // label3
+            // txtLLegadaCaja
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(298, 322);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 13);
-            this.label3.TabIndex = 29;
-            this.label3.Text = "Ingrese la Media";
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(828, 108);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(86, 20);
-            this.textBox12.TabIndex = 30;
+            this.txtLLegadaCaja.Location = new System.Drawing.Point(828, 108);
+            this.txtLLegadaCaja.Name = "txtLLegadaCaja";
+            this.txtLLegadaCaja.Size = new System.Drawing.Size(86, 20);
+            this.txtLLegadaCaja.TabIndex = 30;
             // 
             // titLlegClieAtPerson
             // 
@@ -367,12 +261,12 @@
             this.titLlegClieAtPerson.TabIndex = 31;
             this.titLlegClieAtPerson.Text = "Llegada de Clientes para Aten. Personalizada";
             // 
-            // textBox13
+            // txtLLegadaAtPers
             // 
-            this.textBox13.Location = new System.Drawing.Point(828, 131);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(86, 20);
-            this.textBox13.TabIndex = 32;
+            this.txtLLegadaAtPers.Location = new System.Drawing.Point(828, 131);
+            this.txtLLegadaAtPers.Name = "txtLLegadaAtPers";
+            this.txtLLegadaAtPers.Size = new System.Drawing.Size(86, 20);
+            this.txtLLegadaAtPers.TabIndex = 32;
             // 
             // titLlegCliTarjCred
             // 
@@ -404,26 +298,26 @@
             this.titLlegCliPrestamas.TabIndex = 35;
             this.titLlegCliPrestamas.Text = "Llegada de Clientes para Prestamos";
             // 
-            // textBox14
+            // txtLLegadaPrestamos
             // 
-            this.textBox14.Location = new System.Drawing.Point(828, 208);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(86, 20);
-            this.textBox14.TabIndex = 36;
+            this.txtLLegadaPrestamos.Location = new System.Drawing.Point(828, 208);
+            this.txtLLegadaPrestamos.Name = "txtLLegadaPrestamos";
+            this.txtLLegadaPrestamos.Size = new System.Drawing.Size(86, 20);
+            this.txtLLegadaPrestamos.TabIndex = 36;
             // 
-            // textBox15
+            // txtLLegadaPlazoFijo
             // 
-            this.textBox15.Location = new System.Drawing.Point(828, 182);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(86, 20);
-            this.textBox15.TabIndex = 37;
+            this.txtLLegadaPlazoFijo.Location = new System.Drawing.Point(828, 182);
+            this.txtLLegadaPlazoFijo.Name = "txtLLegadaPlazoFijo";
+            this.txtLLegadaPlazoFijo.Size = new System.Drawing.Size(86, 20);
+            this.txtLLegadaPlazoFijo.TabIndex = 37;
             // 
-            // textBox16
+            // txtLLegadaTarjeta
             // 
-            this.textBox16.Location = new System.Drawing.Point(828, 156);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(86, 20);
-            this.textBox16.TabIndex = 38;
+            this.txtLLegadaTarjeta.Location = new System.Drawing.Point(828, 156);
+            this.txtLLegadaTarjeta.Name = "txtLLegadaTarjeta";
+            this.txtLLegadaTarjeta.Size = new System.Drawing.Size(86, 20);
+            this.txtLLegadaTarjeta.TabIndex = 38;
             // 
             // titFinCaja
             // 
@@ -444,33 +338,33 @@
             this.label2.TabIndex = 40;
             this.label2.Text = "Ingrese la Media";
             // 
-            // textBox17
+            // txtFinPlazoFijo
             // 
-            this.textBox17.Location = new System.Drawing.Point(828, 312);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(86, 20);
-            this.textBox17.TabIndex = 41;
+            this.txtFinPlazoFijo.Location = new System.Drawing.Point(828, 312);
+            this.txtFinPlazoFijo.Name = "txtFinPlazoFijo";
+            this.txtFinPlazoFijo.Size = new System.Drawing.Size(86, 20);
+            this.txtFinPlazoFijo.TabIndex = 41;
             // 
-            // textBox18
+            // txtFinTarjeta
             // 
-            this.textBox18.Location = new System.Drawing.Point(828, 286);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(86, 20);
-            this.textBox18.TabIndex = 42;
+            this.txtFinTarjeta.Location = new System.Drawing.Point(828, 286);
+            this.txtFinTarjeta.Name = "txtFinTarjeta";
+            this.txtFinTarjeta.Size = new System.Drawing.Size(86, 20);
+            this.txtFinTarjeta.TabIndex = 42;
             // 
-            // textBox19
+            // txtFinAtPers
             // 
-            this.textBox19.Location = new System.Drawing.Point(828, 260);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(86, 20);
-            this.textBox19.TabIndex = 43;
+            this.txtFinAtPers.Location = new System.Drawing.Point(828, 260);
+            this.txtFinAtPers.Name = "txtFinAtPers";
+            this.txtFinAtPers.Size = new System.Drawing.Size(86, 20);
+            this.txtFinAtPers.TabIndex = 43;
             // 
-            // textBox20
+            // txtFinCaja
             // 
-            this.textBox20.Location = new System.Drawing.Point(828, 234);
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(86, 20);
-            this.textBox20.TabIndex = 44;
+            this.txtFinCaja.Location = new System.Drawing.Point(828, 234);
+            this.txtFinCaja.Name = "txtFinCaja";
+            this.txtFinCaja.Size = new System.Drawing.Size(86, 20);
+            this.txtFinCaja.TabIndex = 44;
             // 
             // titFinAtPers
             // 
@@ -512,19 +406,19 @@
             this.titFinTarj.TabIndex = 48;
             this.titFinTarj.Text = "Fin Atención para Trajetas de Crédito 1 - 2 \r\n";
             // 
-            // textBox21
+            // txtFinServicioAdicional
             // 
-            this.textBox21.Location = new System.Drawing.Point(828, 364);
-            this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(86, 20);
-            this.textBox21.TabIndex = 49;
+            this.txtFinServicioAdicional.Location = new System.Drawing.Point(828, 364);
+            this.txtFinServicioAdicional.Name = "txtFinServicioAdicional";
+            this.txtFinServicioAdicional.Size = new System.Drawing.Size(86, 20);
+            this.txtFinServicioAdicional.TabIndex = 49;
             // 
-            // textBox22
+            // txtFinPrestamo
             // 
-            this.textBox22.Location = new System.Drawing.Point(828, 338);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(86, 20);
-            this.textBox22.TabIndex = 50;
+            this.txtFinPrestamo.Location = new System.Drawing.Point(828, 338);
+            this.txtFinPrestamo.Name = "txtFinPrestamo";
+            this.txtFinPrestamo.Size = new System.Drawing.Size(86, 20);
+            this.txtFinPrestamo.TabIndex = 50;
             // 
             // titFinAtServAdicional
             // 
@@ -613,10 +507,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(22, 75);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(446, 13);
+            this.label8.Size = new System.Drawing.Size(404, 13);
             this.label8.TabIndex = 60;
-            this.label8.Text = "Deberá ingresar la Media para generar una Exponencial Negativa para cada Objeto y" +
-    " Evento";
+            this.label8.Text = "Deberá ingresar la Media para generar una Exponencial Negativa para cada Evento";
             // 
             // txtInicioSim
             // 
@@ -654,12 +547,12 @@
             this.txtIniciaDesde.Text = "Mostrar resultados desde la fila nro:";
             this.txtIniciaDesde.Click += new System.EventHandler(this.label9_Click);
             // 
-            // textBox25
+            // txtNroDesdeFila
             // 
-            this.textBox25.Location = new System.Drawing.Point(319, 610);
-            this.textBox25.Name = "textBox25";
-            this.textBox25.Size = new System.Drawing.Size(65, 20);
-            this.textBox25.TabIndex = 64;
+            this.txtNroDesdeFila.Location = new System.Drawing.Point(326, 639);
+            this.txtNroDesdeFila.Name = "txtNroDesdeFila";
+            this.txtNroDesdeFila.Size = new System.Drawing.Size(65, 20);
+            this.txtNroDesdeFila.TabIndex = 64;
             // 
             // label9
             // 
@@ -673,13 +566,33 @@
             this.label9.Text = "En la proxima ventana visualizará 300 filas a partir de la que elija + los valore" +
     "s finales";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label10.Location = new System.Drawing.Point(23, 639);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(297, 20);
+            this.label10.TabIndex = 66;
+            this.label10.Text = "Mostrar resultados desde la fila nro:";
+            // 
+            // txtNroFilaTotal
+            // 
+            this.txtNroFilaTotal.Location = new System.Drawing.Point(326, 610);
+            this.txtNroFilaTotal.Name = "txtNroFilaTotal";
+            this.txtNroFilaTotal.Size = new System.Drawing.Size(65, 20);
+            this.txtNroFilaTotal.TabIndex = 67;
+            // 
             // pantalla
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 749);
+            this.Controls.Add(this.txtNroFilaTotal);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox25);
+            this.Controls.Add(this.txtNroDesdeFila);
             this.Controls.Add(this.txtIniciaDesde);
             this.Controls.Add(this.buttonInicioSim);
             this.Controls.Add(this.txtInicioSim);
@@ -693,47 +606,34 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.titServAdicionalEntran);
             this.Controls.Add(this.titFinAtServAdicional);
-            this.Controls.Add(this.textBox22);
-            this.Controls.Add(this.textBox21);
+            this.Controls.Add(this.txtFinPrestamo);
+            this.Controls.Add(this.txtFinServicioAdicional);
             this.Controls.Add(this.titFinTarj);
             this.Controls.Add(this.titFinPlazoFijo);
             this.Controls.Add(this.titFinPrestamos);
             this.Controls.Add(this.titFinAtPers);
-            this.Controls.Add(this.textBox20);
-            this.Controls.Add(this.textBox19);
-            this.Controls.Add(this.textBox18);
-            this.Controls.Add(this.textBox17);
+            this.Controls.Add(this.txtFinCaja);
+            this.Controls.Add(this.txtFinAtPers);
+            this.Controls.Add(this.txtFinTarjeta);
+            this.Controls.Add(this.txtFinPlazoFijo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.titFinCaja);
-            this.Controls.Add(this.textBox16);
-            this.Controls.Add(this.textBox15);
-            this.Controls.Add(this.textBox14);
+            this.Controls.Add(this.txtLLegadaTarjeta);
+            this.Controls.Add(this.txtLLegadaPlazoFijo);
+            this.Controls.Add(this.txtLLegadaPrestamos);
             this.Controls.Add(this.titLlegCliPrestamas);
             this.Controls.Add(this.titLegCliPlazoFijos);
             this.Controls.Add(this.titLlegCliTarjCred);
-            this.Controls.Add(this.textBox13);
+            this.Controls.Add(this.txtLLegadaAtPers);
             this.Controls.Add(this.titLlegClieAtPerson);
-            this.Controls.Add(this.textBox12);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtLLegadaCaja);
             this.Controls.Add(this.titEventoLlegClienteCaja);
-            this.Controls.Add(this.textBox11);
             this.Controls.Add(this.titServAdicional);
             this.Controls.Add(this.titPrestamos);
-            this.Controls.Add(this.textBox10);
-            this.Controls.Add(this.textBox9);
             this.Controls.Add(this.titAtencPersonaliz);
             this.Controls.Add(this.titTajCred);
             this.Controls.Add(this.titPlazosFijos);
             this.Controls.Add(this.titCajas);
-            this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.titPedidoMedia);
             this.Controls.Add(this.titClientesTarjetas);
             this.Controls.Add(this.titClientesPlazosFijos);
             this.Controls.Add(this.titClientesPrestamos);
@@ -761,47 +661,34 @@
         private System.Windows.Forms.Label titClientesPrestamos;
         private System.Windows.Forms.Label titClientesPlazosFijos;
         private System.Windows.Forms.Label titClientesTarjetas;
-        private System.Windows.Forms.Label titPedidoMedia;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label titCajas;
         private System.Windows.Forms.Label titPlazosFijos;
         private System.Windows.Forms.Label titTajCred;
         private System.Windows.Forms.Label titAtencPersonaliz;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.Label titPrestamos;
         private System.Windows.Forms.Label titServAdicional;
-        private System.Windows.Forms.TextBox textBox11;
         private System.Windows.Forms.Label titEventoLlegClienteCaja;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox txtLLegadaCaja;
         private System.Windows.Forms.Label titLlegClieAtPerson;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox txtLLegadaAtPers;
         private System.Windows.Forms.Label titLlegCliTarjCred;
         private System.Windows.Forms.Label titLegCliPlazoFijos;
         private System.Windows.Forms.Label titLlegCliPrestamas;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox15;
-        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.TextBox txtLLegadaPrestamos;
+        private System.Windows.Forms.TextBox txtLLegadaPlazoFijo;
+        private System.Windows.Forms.TextBox txtLLegadaTarjeta;
         private System.Windows.Forms.Label titFinCaja;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.TextBox textBox20;
+        private System.Windows.Forms.TextBox txtFinPlazoFijo;
+        private System.Windows.Forms.TextBox txtFinTarjeta;
+        private System.Windows.Forms.TextBox txtFinAtPers;
+        private System.Windows.Forms.TextBox txtFinCaja;
         private System.Windows.Forms.Label titFinAtPers;
         private System.Windows.Forms.Label titFinPrestamos;
         private System.Windows.Forms.Label titFinPlazoFijo;
         private System.Windows.Forms.Label titFinTarj;
-        private System.Windows.Forms.TextBox textBox21;
-        private System.Windows.Forms.TextBox textBox22;
+        private System.Windows.Forms.TextBox txtFinServicioAdicional;
+        private System.Windows.Forms.TextBox txtFinPrestamo;
         private System.Windows.Forms.Label titFinAtServAdicional;
         private System.Windows.Forms.Label titServAdicionalEntran;
         private System.Windows.Forms.Label label4;
@@ -815,8 +702,10 @@
         private System.Windows.Forms.Label txtInicioSim;
         private System.Windows.Forms.Button buttonInicioSim;
         private System.Windows.Forms.Label txtIniciaDesde;
-        private System.Windows.Forms.TextBox textBox25;
+        private System.Windows.Forms.TextBox txtNroDesdeFila;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtNroFilaTotal;
     }
 }
 

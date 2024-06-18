@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace borrador_de_tp4
 {
-    public partial class Form2 : Form
+    public partial class Simulacion : Form
     {
-        public Form2()
+        public Simulacion()
         {
             InitializeComponent();
         }

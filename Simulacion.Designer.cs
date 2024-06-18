@@ -1,6 +1,6 @@
 ﻿namespace borrador_de_tp4
 {
-    partial class Form2
+    partial class Simulacion
     {
         /// <summary>
         /// Required designer variable.
