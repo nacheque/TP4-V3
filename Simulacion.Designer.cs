@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.c1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -121,6 +119,8 @@
             this.c88 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c89 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c90 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -236,27 +236,6 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(5974, 150);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(617, 197);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(271, 25);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "LLEGADA DE CLIENTES";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1255, 197);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(250, 25);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "COLAS  DE CLIENTES";
             // 
             // c1
             // 
@@ -802,6 +781,26 @@
             this.c90.Name = "c90";
             this.c90.Width = 50;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(617, 197);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(271, 25);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "LLEGADA DE CLIENTES";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(1255, 197);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(250, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "COLAS  DE CLIENTES";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -811,7 +810,7 @@
             this.label3.Size = new System.Drawing.Size(360, 25);
             this.label3.TabIndex = 3;
             this.label3.Text = "EVENTOS DE FIN DE ATENCIÓN";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            
             // 
             // label4
             // 
@@ -842,7 +841,7 @@
             this.label6.Size = new System.Drawing.Size(476, 24);
             this.label6.TabIndex = 6;
             this.label6.Text = "Porcentaje de ocupación de objetos permanentes";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            
             // 
             // label7
             // 
@@ -908,7 +907,6 @@
             this.label9.Size = new System.Drawing.Size(442, 42);
             this.label9.TabIndex = 14;
             this.label9.Text = "VECTOR DE ESTADOS";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label10
             // 
@@ -920,7 +918,7 @@
             this.label10.TabIndex = 15;
             this.label10.Text = "BANCO VILLA";
             // 
-            // Form2
+            // Simulacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -942,8 +940,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "Form2";
+            this.Name = "Simulacion";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Simulacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
