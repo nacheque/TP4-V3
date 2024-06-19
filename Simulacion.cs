@@ -21,5 +21,15 @@ namespace borrador_de_tp4
         {
 
         }
+
+        private void GenerarProximaLlegada(Fila fila, int tipoServicio)
+        {
+
+        }
+
+        private void ComienzoLlegada()
+        {
+
+        }
     }
 }

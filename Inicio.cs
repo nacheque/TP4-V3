@@ -56,6 +56,9 @@ namespace borrador_de_tp4
             this.medias.Add(txtFinPrestamo.Text);
             this.medias.Add(txtFinServicioAdicional.Text);
 
+            //falta crear un objeto fila con la carga incial que tenga los datos de inicio y mandar eso por
+            // parametro a la simulacion.
+
             Simulacion f = new Simulacion(this.n , this.filaDesde, this.medias);
             f.Show();
         }
