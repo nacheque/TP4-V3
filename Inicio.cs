@@ -12,6 +12,9 @@ namespace borrador_de_tp4
 {
     public partial class pantalla : Form
     {
+        private int n;
+        private int filaDesde;
+        private List<string> medias;
         public pantalla()
         {
             InitializeComponent();
@@ -32,14 +35,28 @@ namespace borrador_de_tp4
             txtFinServicioAdicional.Text = 5.ToString();
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void buttonInicioSim_Click(object sender, EventArgs e)
         {
-            Simulacion f = new Simulacion();
+            this.n = int.Parse(txtNroFilaTotal.Text.ToString());
+            this.filaDesde = int.Parse(txtNroDesdeFila.Text.ToString());
+
+            this.medias.Clear();
+
+            this.medias.Add(txtLLegadaCaja.Text);
+            this.medias.Add(txtLLegadaAtPers.Text);
+            this.medias.Add(txtLLegadaTarjeta.Text);
+            this.medias.Add(txtLLegadaPlazoFijo.Text);
+            this.medias.Add(txtLLegadaPrestamos.Text);
+            this.medias.Add(txtFinCaja.Text);
+            this.medias.Add(txtFinAtPers.Text);
+            this.medias.Add(txtFinTarjeta.Text);
+            this.medias.Add(txtFinPlazoFijo.Text);
+            this.medias.Add(txtFinPrestamo.Text);
+            this.medias.Add(txtFinServicioAdicional.Text);
+
+            Simulacion f = new Simulacion(this.n , this.filaDesde, this.medias);
             f.Show();
         }
     }

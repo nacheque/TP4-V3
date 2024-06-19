@@ -545,7 +545,7 @@
             this.txtIniciaDesde.Size = new System.Drawing.Size(297, 20);
             this.txtIniciaDesde.TabIndex = 63;
             this.txtIniciaDesde.Text = "Mostrar resultados desde la fila nro:";
-            this.txtIniciaDesde.Click += new System.EventHandler(this.label9_Click);
+            
             // 
             // txtNroDesdeFila
             // 

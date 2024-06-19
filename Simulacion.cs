@@ -12,7 +12,7 @@ namespace borrador_de_tp4
 {
     public partial class Simulacion : Form
     {
-        public Simulacion()
+        public Simulacion(int n, int filaDesde, List<string> listaMedias)
         {
             InitializeComponent();
         }
