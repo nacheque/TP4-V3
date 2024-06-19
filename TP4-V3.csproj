@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RK.cs" />
     <Compile Include="ClienteTemporal.cs" />
     <Compile Include="Cola.cs" />
     <Compile Include="Fila.cs" />
