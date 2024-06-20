@@ -8,37 +8,48 @@ namespace borrador_de_tp4
 {
     public class RK
     {
-        public float h;
-        public float x0;
-        public float y0;
+        public float h = 0.001f;
+        public float x;
+        public float y;
         public float k1;
         public float k2;
         public float k3;
         public float k4;
-        // variable de lista de resultados
+        //Variable de lista de resultados
 
+        //Ejecuta la funcion de la ED
         public float funcion(float x, float y)
         {
-            return h;
+            return 0.025f*x - 0.5f*y - 12.85f;
         }
 
+        //Calcula la y(i+1) para la siguiente iteración
         public float siguienteY()
         {
-            return y0 + h / 6 * (k1 + 2*k2 + 2*k3 + k4);
+            return y + h / 6 * (k1 + 2*k2 + 2*k3 + k4);
         }
         
-        public float ejecutarRK(float parametroCorte)
+        //Funcion que ejecuta el RK hasta que y (c) sea menor a 0 y devuelve la x (tiempo t) en segundos
+        public float ejecutarRK(float parametroCorte, float x0, float y0)
         {
-            float resultado = 0;
-            while (resultado < parametroCorte)
-            {
-                //calculo de la funcion y de las k
+            x = x0;
+            y = y0;
 
-                //revalorizacion del resultado
+            while (y >= 0)
+            {
+                //calculo de las k
+                k1 = funcion(x, y);
+                k2 = funcion(x + h/2, y + k1*h/2);
+                k3 = funcion(x + h/2, y +k2*h/2);
+                k4 = funcion(x + h/2, y + k3*h);
 
                 //calculo de las nuevas x e y
+                x = x + h;
+                y = siguienteY();
             }
-            return resultado;
+
+            //devuelve el tiempo t en el que vuelve la luz (en segundos)
+            return x*30;
         }
 
     }
