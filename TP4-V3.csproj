@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ResultadosRK.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultadosRK.Designer.cs">
+      <DependentUpon>ResultadosRK.cs</DependentUpon>
+    </Compile>
     <Compile Include="RK.cs" />
     <Compile Include="ClienteTemporal.cs" />
     <Compile Include="Cola.cs" />
@@ -68,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultadosRK.resx">
+      <DependentUpon>ResultadosRK.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Simulacion.resx">
       <DependentUpon>Simulacion.cs</DependentUpon>

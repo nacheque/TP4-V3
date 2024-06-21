@@ -16,6 +16,7 @@ namespace borrador_de_tp4
         public float k3;
         public float k4;
         //Variable de lista de resultados
+        public List<ResultadoRK> Resultados { get; private set; } = new List<ResultadoRK>();
 
         //Ejecuta la funcion de la ED
         public float funcion(float x, float y)
@@ -30,7 +31,7 @@ namespace borrador_de_tp4
         }
         
         //Funcion que ejecuta el RK hasta que y (c) sea menor a 0 y devuelve la x (tiempo t) en segundos
-        public float ejecutarRK(float parametroCorte, float x0, float y0)
+        public float ejecutarRK(float x0, float y0)
         {
             x = x0;
             y = y0;
@@ -48,9 +49,28 @@ namespace borrador_de_tp4
                 y = siguienteY();
             }
 
-            //devuelve el tiempo t en el que vuelve la luz (en segundos)
+            //Guardamos los resultados en la lista de resultados
+            Resultados.Add(new ResultadoRK(x0, x, y, x * 30));
+
+            //Devuelve el tiempo t en el que vuelve la luz (en segundos)
             return x*30;
         }
 
+    }
+
+    public class ResultadoRK
+    {
+        public float X0 { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Tiempo { get; set; }
+
+        public ResultadoRK(float x0, float x, float y, float tiempo)
+        {
+            X0 = x0;
+            X = x;
+            Y = y;
+            Tiempo = tiempo;
+        }
     }
 }
