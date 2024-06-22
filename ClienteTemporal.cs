@@ -13,5 +13,43 @@ namespace borrador_de_tp4
         private int id;
         private int tipoServicio;
         private bool tomaServicio;
+
+        public string Estado
+        {
+            get {  return estado; }
+            set { estado = value; }
+        }
+
+        public double InicioAtencion
+        {
+            get { return inicioAtencion;}
+            set {  inicioAtencion = value; }
+        }
+
+        public int Id
+        {
+            get { return id;}
+            set { id = value; }
+        }
+
+        public int TipoServicio
+        {
+            get { return tipoServicio;}
+            set { tipoServicio = value;}
+        }
+
+        public bool TomaServicio
+        {
+            get { return tomaServicio;}
+            set { tomaServicio = value;}
+        }
+
+        public ClienteTemporal(String estado, double inicioAtencion, int id, int tipoServicio, bool tomaServicio){
+            this.estado = estado;
+            this.inicioAtencion = inicioAtencion;
+            this.id = id;
+            this.tipoServicio = tipoServicio;
+            this.tomaServicio = tomaServicio;
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace borrador_de_tp4
     {
         private int n;
         private int filaDesde;
-        private List<string> medias;
+        private List<int> medias;
         public pantalla()
         {
             InitializeComponent();
@@ -42,19 +42,21 @@ namespace borrador_de_tp4
             this.n = int.Parse(txtNroFilaTotal.Text.ToString());
             this.filaDesde = int.Parse(txtNroDesdeFila.Text.ToString());
 
-            this.medias.Clear();
+            List<int> listaMedias = new List<int>();
 
-            this.medias.Add(txtLLegadaCaja.Text);
-            this.medias.Add(txtLLegadaAtPers.Text);
-            this.medias.Add(txtLLegadaTarjeta.Text);
-            this.medias.Add(txtLLegadaPlazoFijo.Text);
-            this.medias.Add(txtLLegadaPrestamos.Text);
-            this.medias.Add(txtFinCaja.Text);
-            this.medias.Add(txtFinAtPers.Text);
-            this.medias.Add(txtFinTarjeta.Text);
-            this.medias.Add(txtFinPlazoFijo.Text);
-            this.medias.Add(txtFinPrestamo.Text);
-            this.medias.Add(txtFinServicioAdicional.Text);
+            listaMedias.Add(int.Parse(txtLLegadaCaja.Text));
+            listaMedias.Add(int.Parse(txtLLegadaAtPers.Text));
+            listaMedias.Add(int.Parse(txtLLegadaTarjeta.Text));
+            listaMedias.Add(int.Parse(txtLLegadaPlazoFijo.Text));
+            listaMedias.Add(int.Parse(txtLLegadaPrestamos.Text));
+            listaMedias.Add(int.Parse(txtFinCaja.Text));
+            listaMedias.Add(int.Parse(txtFinAtPers.Text));
+            listaMedias.Add(int.Parse(txtFinTarjeta.Text));
+            listaMedias.Add(int.Parse(txtFinPlazoFijo.Text));
+            listaMedias.Add(int.Parse(txtFinPrestamo.Text));
+            listaMedias.Add(int.Parse(txtFinServicioAdicional.Text));
+
+            this.medias = listaMedias;
 
             //falta crear un objeto fila con la carga incial que tenga los datos de inicio y mandar eso por
             // parametro a la simulacion.

@@ -8,9 +8,27 @@ namespace borrador_de_tp4
 {
     public class Cola
     {
-        public List<ClienteTemporal> cantidad;
-        public double tiempoEspera = 0;
+        private List<ClienteTemporal> cantidad;
+        private double tiempoEspera = 0;
         //Porcentaje Tiempo Fuera
-        public double PRCtiempoFuera;
+        private double prcTiempoFuera;
+
+        public List<ClienteTemporal> Cantidad
+        {
+            get { return cantidad; }
+            set { cantidad = value; }
+        }
+
+        public double TiempoEspera
+        {
+            get { return tiempoEspera; }
+            set {  tiempoEspera = value; }
+        }
+
+        public double PrcTiempoFuera
+        {
+            get { return prcTiempoFuera; }
+            set { prcTiempoFuera = value; }
+        }
     }
 }
