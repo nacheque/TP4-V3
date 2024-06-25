@@ -33,6 +33,7 @@ namespace borrador_de_tp4
             txtFinPlazoFijo.Text = 2.ToString();
             txtFinPrestamo.Text = 4.ToString();
             txtFinServicioAdicional.Text = 5.ToString();
+            chkCajero5.Checked = false;
         }
 
 
@@ -61,7 +62,7 @@ namespace borrador_de_tp4
             //falta crear un objeto fila con la carga incial que tenga los datos de inicio y mandar eso por
             // parametro a la simulacion.
 
-            Simulacion f = new Simulacion(this.n , this.filaDesde, this.medias);
+            Simulacion f = new Simulacion(this.n , this.filaDesde, this.medias, chkCajero5.Checked);
             f.Show();
         }
     }

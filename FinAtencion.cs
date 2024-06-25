@@ -8,11 +8,11 @@ namespace borrador_de_tp4
 {
     public class FinAtencion
     {
-        private double tiempoAtencion;
-        private double acTiempoAtencion;
-        private double prcOcupacion;
+        private double tiempoAtencion = 0.0;
+        private double acTiempoAtencion = 0.0;
+        private double prcOcupacion = 0.0;
         private List<double> horaFinAtencion;
-        private int media;
+        private int media = 0;
         private List<ClienteTemporal> cliente;
 
         public double TiempoAtencion
@@ -24,13 +24,13 @@ namespace borrador_de_tp4
         public double ACtiempoAtencion
         {
             get{ return acTiempoAtencion; }
-            set{ ACtiempoAtencion = value; }
+            set{ acTiempoAtencion = value; }
         }
 
         public double PRCOcupacion
         {
             get{ return prcOcupacion; }
-            set{ PRCOcupacion = value; }
+            set{ prcOcupacion = value; }
         }
 
         public List<double> HoraFinAtencion

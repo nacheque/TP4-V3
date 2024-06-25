@@ -82,6 +82,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txtNroFilaTotal = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chkCajero5 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -487,7 +489,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(190, 267);
+            this.label6.Location = new System.Drawing.Point(253, 108);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(194, 13);
             this.label6.TabIndex = 58;
@@ -496,7 +498,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(214, 510);
+            this.label7.Location = new System.Drawing.Point(258, 322);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(168, 13);
             this.label7.TabIndex = 59;
@@ -545,7 +547,6 @@
             this.txtIniciaDesde.Size = new System.Drawing.Size(297, 20);
             this.txtIniciaDesde.TabIndex = 63;
             this.txtIniciaDesde.Text = "Mostrar resultados desde la fila nro:";
-            
             // 
             // txtNroDesdeFila
             // 
@@ -584,11 +585,32 @@
             this.txtNroFilaTotal.Size = new System.Drawing.Size(65, 20);
             this.txtNroFilaTotal.TabIndex = 67;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(22, 517);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(321, 25);
+            this.label3.TabIndex = 68;
+            this.label3.Text = "desea agregar quinto cajero?";
+            // 
+            // chkCajero5
+            // 
+            this.chkCajero5.AutoSize = true;
+            this.chkCajero5.Location = new System.Drawing.Point(349, 526);
+            this.chkCajero5.Name = "chkCajero5";
+            this.chkCajero5.Size = new System.Drawing.Size(15, 14);
+            this.chkCajero5.TabIndex = 69;
+            this.chkCajero5.UseVisualStyleBackColor = true;
+            // 
             // pantalla
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 749);
+            this.Controls.Add(this.chkCajero5);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtNroFilaTotal);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -706,6 +728,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtNroFilaTotal;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox chkCajero5;
     }
 }
 
