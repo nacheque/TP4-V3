@@ -166,23 +166,20 @@ namespace borrador_de_tp4
 
         private void Simulacion_Load(object sender, EventArgs e)
         {
-            Fila filaActual = GenerarFila0(0);
-            LlenarTabla(filaActual);
-            Fila filaSiguiente = GenerarFilaSiguiente();
-            //comparar las proximas llegadas y los tiempos de fin de atencion
-            /*for (int i = 0; i < fila1.llegada.Count; i++)
+
+            //llenar la tabla con 300 filas
+            for (int i = 0; i < 300; i++)
             {
-                fila2.llegada[i] = fila1.llegada[i];
-                if (proxTiempo > fila1.llegada[i].proxLlegada)
-                {
-                    proxTiempo = fila1.llegada[i].proxLlegada;
-                    tipoEvento = i;
-                    proxEvento = fila1.llegada[i].GetType().Name;
-                }
-            }*/
+                grdSimulacion.Rows.Add();
+            }
+
+            Fila filaActual = GenerarFila0(0);
+            LlenarTabla(filaActual, "Inicializacion");
+            Fila filaSiguiente = GenerarFilaSiguiente();
+            
             double proximoTiempo = filaActual.Llegada[0].ProximaLlegada;
             int tipoEvento = 0;
-            string proximoEvento;
+            string proximoEvento = "";
             for (int i = 0; i < filaActual.Llegada.Count(); i++)
             {
                 filaSiguiente.Llegada[i] = filaActual.Llegada[i];
@@ -190,69 +187,78 @@ namespace borrador_de_tp4
                 {
                     proximoTiempo = filaActual.Llegada[i].ProximaLlegada;
                     tipoEvento = i;
-                    proximoEvento = filaActual.Llegada[i].GetType().Name;
+                    proximoEvento = filaActual.Llegada[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
                 }
 
             }
 
+            filaSiguiente.Evento = proximoEvento;
+            filaSiguiente.Reloj = proximoTiempo;
             //Crea un nuevo cliente temporal para la proxima llegada
             ComienzoLlegada(filaSiguiente, tipoEvento);
 
-            LlenarTabla(filaSiguiente);
+            LlenarTabla(filaSiguiente, filaSiguiente.Evento);
 
             
         }
 
-        private void LlenarTabla(Fila fila)
+        private void LlenarTabla(Fila fila, string proximoEvento)
         {
-            grdSimulacion.Rows.Add();
+            //buscar la primer fila vacia
+            for (int ui = 0; ui < grdSimulacion.Rows.Count; ui++)
+            {
+                var valor = grdSimulacion.Rows[ui].Cells["c1"].Value;
 
-            int ui = grdSimulacion.Rows.Count - 1;
+                if (valor == "" || valor == null)
+                {
+                    grdSimulacion.Rows[ui].Cells["c1"].Value = fila.Evento;
+                    grdSimulacion.Rows[ui].Cells["c2"].Value = fila.Reloj;
+                    //EVENTO LLEGADA CLIENTE
+                    //llegada clientes caja
+                    grdSimulacion.Rows[ui].Cells["c3"].Value = fila.Llegada[0].TiempoEntreLlegada.ToString();
+                    grdSimulacion.Rows[ui].Cells["c4"].Value = fila.Llegada[0].ProximaLlegada.ToString();
+                    //llegada clientes atencion personalizada
+                    grdSimulacion.Rows[ui].Cells["c5"].Value = fila.Llegada[1].TiempoEntreLlegada.ToString();
+                    grdSimulacion.Rows[ui].Cells["c6"].Value = fila.Llegada[1].ProximaLlegada.ToString();
+                    //llegada cliente tarjeta
+                    grdSimulacion.Rows[ui].Cells["c7"].Value = fila.Llegada[2].TiempoEntreLlegada.ToString();
+                    grdSimulacion.Rows[ui].Cells["c8"].Value = fila.Llegada[2].ProximaLlegada.ToString();
+                    //llegada cliente plazos fijos
+                    grdSimulacion.Rows[ui].Cells["c9"].Value = fila.Llegada[3].TiempoEntreLlegada.ToString();
+                    grdSimulacion.Rows[ui].Cells["c10"].Value = fila.Llegada[3].ProximaLlegada.ToString();
+                    //llegada cliente prestamos
+                    grdSimulacion.Rows[ui].Cells["c11"].Value = fila.Llegada[4].TiempoEntreLlegada.ToString();
+                    grdSimulacion.Rows[ui].Cells["c12"].Value = fila.Llegada[4].ProximaLlegada.ToString();
 
-            grdSimulacion.Rows[ui].Cells["c1"].Value = fila.Evento;
-            grdSimulacion.Rows[ui].Cells["c2"].Value = fila.Reloj;
-            //EVENTO LLEGADA CLIENTE
-            //llegada clientes caja
-            grdSimulacion.Rows[ui].Cells["c3"].Value = fila.Llegada[0].TiempoEntreLlegada.ToString();
-            grdSimulacion.Rows[ui].Cells["c4"].Value = fila.Llegada[0].ProximaLlegada.ToString();
-            //llegada clientes atencion personalizada
-            grdSimulacion.Rows[ui].Cells["c5"].Value = fila.Llegada[1].TiempoEntreLlegada.ToString();
-            grdSimulacion.Rows[ui].Cells["c6"].Value = fila.Llegada[1].ProximaLlegada.ToString();
-            //llegada cliente tarjeta
-            grdSimulacion.Rows[ui].Cells["c7"].Value = fila.Llegada[2].TiempoEntreLlegada.ToString();
-            grdSimulacion.Rows[ui].Cells["c8"].Value = fila.Llegada[2].ProximaLlegada.ToString();
-            //llegada cliente plazos fijos
-            grdSimulacion.Rows[ui].Cells["c9"].Value = fila.Llegada[3].TiempoEntreLlegada.ToString();
-            grdSimulacion.Rows[ui].Cells["c10"].Value = fila.Llegada[3].ProximaLlegada.ToString();
-            //llegada cliente prestamos
-            grdSimulacion.Rows[ui].Cells["c11"].Value = fila.Llegada[4].TiempoEntreLlegada.ToString();
-            grdSimulacion.Rows[ui].Cells["c12"].Value = fila.Llegada[4].ProximaLlegada.ToString();
+                    //COLAS
+                    //cola cajas
+                    grdSimulacion.Rows[ui].Cells["c15"].Value = fila.Colas[0].Clientes.Count().ToString();
+                    grdSimulacion.Rows[ui].Cells["c18"].Value = fila.Colas[1].Clientes.Count().ToString();
+                    grdSimulacion.Rows[ui].Cells["c21"].Value = fila.Colas[2].Clientes.Count().ToString();
+                    grdSimulacion.Rows[ui].Cells["c24"].Value = fila.Colas[3].Clientes.Count().ToString();
+                    grdSimulacion.Rows[ui].Cells["c27"].Value = fila.Colas[4].Clientes.Count().ToString();
+                    grdSimulacion.Rows[ui].Cells["c30"].Value = fila.Colas[0].Clientes.Count().ToString();
 
-            //COLAS
-            //cola cajas
-            grdSimulacion.Rows[ui].Cells["c15"].Value = fila.Colas[0].Clientes.Count().ToString();
-            grdSimulacion.Rows[ui].Cells["c18"].Value = fila.Colas[1].Clientes.Count().ToString();
-            grdSimulacion.Rows[ui].Cells["c21"].Value = fila.Colas[2].Clientes.Count().ToString();
-            grdSimulacion.Rows[ui].Cells["c24"].Value = fila.Colas[3].Clientes.Count().ToString();
-            grdSimulacion.Rows[ui].Cells["c27"].Value = fila.Colas[4].Clientes.Count().ToString();
-            grdSimulacion.Rows[ui].Cells["c30"].Value = fila.Colas[0].Clientes.Count().ToString();
+                    //Estados de objetos permanentes [1] para el servicio [2] para el servidor
+                    grdSimulacion.Rows[ui].Cells["c66"].Value = fila.Estados[0][0];
+                    grdSimulacion.Rows[ui].Cells["c67"].Value = fila.Estados[0][1];
+                    grdSimulacion.Rows[ui].Cells["c68"].Value = fila.Estados[0][2];
+                    grdSimulacion.Rows[ui].Cells["c69"].Value = fila.Estados[0][3];
+                    //grdSimulacion.Rows[0].Cells["c70"].Value = fila.Estados[0][4];
+                    grdSimulacion.Rows[ui].Cells["c71"].Value = fila.Estados[1][0];
+                    grdSimulacion.Rows[ui].Cells["c72"].Value = fila.Estados[1][1];
+                    grdSimulacion.Rows[ui].Cells["c73"].Value = fila.Estados[1][2];
+                    grdSimulacion.Rows[ui].Cells["c74"].Value = fila.Estados[2][0];
+                    grdSimulacion.Rows[ui].Cells["c75"].Value = fila.Estados[2][1];
+                    grdSimulacion.Rows[ui].Cells["c76"].Value = fila.Estados[3][0];
+                    grdSimulacion.Rows[ui].Cells["c77"].Value = fila.Estados[4][0];
+                    grdSimulacion.Rows[ui].Cells["c78"].Value = fila.Estados[4][1];
+                    grdSimulacion.Rows[ui].Cells["c79"].Value = fila.Estados[5][0];
+                    grdSimulacion.Rows[ui].Cells["c80"].Value = fila.Estados[5][1];
+                    break;
+                }
+            }
 
-            //Estados de objetos permanentes [1] para el servicio [2] para el servidor
-            grdSimulacion.Rows[ui].Cells["c66"].Value = fila.Estados[0][0];
-            grdSimulacion.Rows[ui].Cells["c67"].Value = fila.Estados[0][1];
-            grdSimulacion.Rows[ui].Cells["c68"].Value = fila.Estados[0][2];
-            grdSimulacion.Rows[ui].Cells["c69"].Value = fila.Estados[0][3];
-            //grdSimulacion.Rows[0].Cells["c70"].Value = fila.Estados[0][4];
-            grdSimulacion.Rows[ui].Cells["c71"].Value = fila.Estados[1][0];
-            grdSimulacion.Rows[ui].Cells["c72"].Value = fila.Estados[1][1];
-            grdSimulacion.Rows[ui].Cells["c73"].Value = fila.Estados[1][2];
-            grdSimulacion.Rows[ui].Cells["c74"].Value = fila.Estados[2][0];
-            grdSimulacion.Rows[ui].Cells["c75"].Value = fila.Estados[2][1];
-            grdSimulacion.Rows[ui].Cells["c76"].Value = fila.Estados[3][0];
-            grdSimulacion.Rows[ui].Cells["c77"].Value = fila.Estados[4][0];
-            grdSimulacion.Rows[ui].Cells["c78"].Value = fila.Estados[4][1];
-            grdSimulacion.Rows[ui].Cells["c79"].Value = fila.Estados[5][0];
-            grdSimulacion.Rows[ui].Cells["c80"].Value = fila.Estados[5][1];
         }
 
         private void GenerarProximaLlegada(Fila fila, int tipoServicio)
@@ -276,9 +282,44 @@ namespace borrador_de_tp4
 
             fila.ClientesTemporales.Add(clienteTemporal);
 
-            //grdSimulacion.
+            ServicioEspecialLlegada(fila, clienteTemporal);            
 
             GenerarFin(fila, tipoServicio, clienteTemporal);
+
+        }
+
+        private void ServicioEspecialLlegada(Fila fila, ClienteTemporal clienteTemporal){
+            
+            Random random = new Random();
+            double numeroDecimalAleatorio = random.NextDouble();
+
+            // Redondear a dos decimales
+            numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
+
+            if(numeroDecimalAleatorio < 0.18){
+                clienteTemporal.TomaServicio = true;
+
+            } else {
+                clienteTemporal.TomaServicio = false;
+            }
+        }
+
+        private void ServicioEspecialFin(Fila fila, ClienteTemporal clienteTemporal){
+            Random random = new Random();
+            double numeroDecimalAleatorio = random.NextDouble();
+
+            // Redondear a dos decimales
+            numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
+
+            if(numeroDecimalAleatorio < 0.18){
+                clienteTemporal.TomaServicio = true;
+
+            } else {
+                clienteTemporal.TomaServicio = false;
+            }
+        }
+
+        private void GenerarFinServicioAdicional(){
 
         }
 
@@ -288,6 +329,7 @@ namespace borrador_de_tp4
             {
                 if (fila.Estados[tipoServicio][i] == "Libre")
                 {
+                    
                     fila.Estados[tipoServicio][i] = "Ocupado";
                     clienteTemporal.Estado = "Siendo Atendido";
                     clienteTemporal.InicioAtencion = fila.Reloj;
