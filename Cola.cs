@@ -11,7 +11,7 @@ namespace borrador_de_tp4
         private List<ClienteTemporal> clientes;
         private double tiempoEspera = 0;
         //Porcentaje Tiempo Fuera
-        private double prcTiempoFuera;
+        private double prcTiempoFuera = 0;
 
         public List<ClienteTemporal> Clientes
         {

@@ -15,6 +15,8 @@ namespace borrador_de_tp4
         private int media = 0;
         private List<ClienteTemporal> cliente;
 
+        
+        
         public double TiempoAtencion
         {
             get{ return tiempoAtencion; }

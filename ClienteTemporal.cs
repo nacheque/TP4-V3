@@ -9,7 +9,7 @@ namespace borrador_de_tp4
     public class ClienteTemporal
     {
         private string estado;
-        private double inicioAtencion;
+        private double inicioAtencion = 0;
         private int id;
         private int tipoServicio;
         private bool tomaServicio;

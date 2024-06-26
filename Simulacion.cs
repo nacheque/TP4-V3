@@ -76,6 +76,25 @@ namespace borrador_de_tp4
             List<string> estadoServicioAdicional = new List<string> { "Libre", "Libre"};
             List<List<string>> estados = new List<List<string>> { estadoCaja, estadoAtencionPersonalizada, estadoTarjetaCredito, estadoPlazoFijo, estadoPrestamos, estadoServicioAdicional };
 
+
+            FinAtencion finAtencionCaja = new FinAtencion();
+            FinAtencion finAtencionPersonalizada = new FinAtencion();
+            FinAtencion finAtencionTarjetaCredito = new FinAtencion();
+            FinAtencion finAtencionPlazoFijo = new FinAtencion();
+            FinAtencion finAtencionPrestamos = new FinAtencion();
+            FinAtencion finAtencionServicioAdicional = new FinAtencion();
+
+            finAtencionCaja.ACtiempoAtencion = 0;
+            finAtencionPersonalizada.ACtiempoAtencion = 0;
+            finAtencionTarjetaCredito.ACtiempoAtencion = 0;
+            finAtencionPlazoFijo.ACtiempoAtencion = 0;
+            finAtencionPrestamos.ACtiempoAtencion = 0;
+            finAtencionServicioAdicional.ACtiempoAtencion = 0;
+
+            List<FinAtencion> finesAtencion = new List<FinAtencion> { finAtencionCaja, finAtencionPersonalizada, finAtencionTarjetaCredito, finAtencionPlazoFijo, finAtencionPrestamos, finAtencionServicioAdicional };
+
+
+
             List<ClienteTemporal> clientesTemporales = new List<ClienteTemporal>();
             Fila fila = new Fila();
             fila.Reloj = 0.0;
@@ -84,6 +103,7 @@ namespace borrador_de_tp4
             fila.Colas = colas;
             fila.Estados = estados;
             fila.ClientesTemporales = clientesTemporales;
+            fila.FinesAtencion = finesAtencion;
 
             return fila;
         }
@@ -139,7 +159,6 @@ namespace borrador_de_tp4
             finAtencionPlazoFijo.HoraFinAtencion = new List<double> { 0 };
             finAtencionPrestamos.HoraFinAtencion = new List<double> { 0, 0 };
             finAtencionServicioAdicional.HoraFinAtencion = new List<double> { 0, 0 };
-            
 
             List<FinAtencion> finesAtencion = new List<FinAtencion> { finAtencionCaja, finAtencionPersonalizada, finAtencionTarjetaCredito, finAtencionPlazoFijo, finAtencionPrestamos, finAtencionServicioAdicional};
 
@@ -171,6 +190,7 @@ namespace borrador_de_tp4
             for (int i = 0; i < 300; i++)
             {
                 grdSimulacion.Rows.Add();
+                grdSimulacion.Rows[i].Cells["nroFila"].Value = i;
             }
 
             Fila filaActual = GenerarFila0(0);
@@ -229,6 +249,16 @@ namespace borrador_de_tp4
                     //llegada cliente prestamos
                     grdSimulacion.Rows[ui].Cells["c11"].Value = fila.Llegada[4].TiempoEntreLlegada.ToString();
                     grdSimulacion.Rows[ui].Cells["c12"].Value = fila.Llegada[4].ProximaLlegada.ToString();
+
+                    //ACUMULADORES DE TIEMPO DE ESPERA
+                    grdSimulacion.Rows[ui].Cells["c16"].Value = fila.FinesAtencion[0].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c19"].Value = fila.FinesAtencion[1].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c22"].Value = fila.FinesAtencion[2].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c25"].Value = fila.FinesAtencion[3].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c28"].Value = fila.FinesAtencion[4].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c31"].Value = fila.FinesAtencion[5].ACtiempoAtencion.ToString();
+
+                    //PORCENTAJE DE TIEMPO DE ESPERA
 
                     //COLAS
                     //cola cajas
