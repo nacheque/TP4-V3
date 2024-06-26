@@ -21,9 +21,8 @@ namespace borrador_de_tp4
         private Llegada llegadaPrestamos;
         private Llegada llegadaServicioAdicional;
         */
-
+        
         private List<Llegada> llegada;
-
         /*
         private Cola colaCaja;
         private Cola colaAtencionPersonalizada;

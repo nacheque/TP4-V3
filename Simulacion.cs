@@ -341,7 +341,7 @@ namespace borrador_de_tp4
             // Redondear a dos decimales
             numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
 
-            if(numeroDecimalAleatorio < 0.18){
+            if(numeroDecimalAleatorio < 0.33){
                 clienteTemporal.TomaServicio = true;
 
             } else {
@@ -392,8 +392,6 @@ namespace borrador_de_tp4
         {
             ClienteTemporal clienteTemporal = fila.FinesAtencion[tipoServicio].Cliente[servidor];
 
-            fila.ClientesTemporales.Remove(clienteTemporal);
-
             if(fila.Colas[tipoServicio].Clientes.Count != 0){
 
                 foreach(var cliente in fila.ClientesTemporales){
@@ -414,6 +412,84 @@ namespace borrador_de_tp4
             //Lo dejo en cero para demostrar que no tiene una atencion
             fila.FinesAtencion[tipoServicio].HoraFinAtencion[servidor] = 0;
             fila.Estados[tipoServicio][servidor] = "Libre";
+
+
+            if(clienteTemporal.TomaServicio == true)
+            {
+                //Generar la funcion del servicio especial
+            } else
+            {
+                fila.ClientesTemporales.Remove(clienteTemporal);
+            }
+
         }
+
+        private void GenerarFinServicioEspecial(Fila fila, ClienteTemporal clienteTemporal)
+        {
+            for(int i = 0; i < fila.Estados[5].Count; i++)
+            {
+                if (fila.Estados[5][i] == "Libre")
+                {
+                    fila.Estados[5][i] = "Ocupado";
+                    clienteTemporal.Estado = "Siendo Atendido";
+                    clienteTemporal.InicioAtencion = fila.Reloj;
+
+                    fila.FinesAtencion[5].Cliente[i] = clienteTemporal;
+
+                    int index = fila.ClientesTemporales.IndexOf(clienteTemporal);
+                    fila.ClientesTemporales[index].Estado = clienteTemporal.Estado;
+                    fila.ClientesTemporales[index].InicioAtencion = clienteTemporal.InicioAtencion;
+
+                    Random random = new Random();
+
+                    double numeroDecimalAleatorio = random.NextDouble();
+
+                    numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
+
+                    fila.FinesAtencion[5].TiempoAtencion = -fila.FinesAtencion[5].Media * Math.Log(1 - numeroDecimalAleatorio);
+                    fila.FinesAtencion[5].HoraFinAtencion[i] = fila.Reloj + fila.FinesAtencion[5].TiempoAtencion;
+                    fila.FinesAtencion[5].ACtiempoAtencion += fila.FinesAtencion[5].TiempoAtencion;
+                    fila.FinesAtencion[5].PRCOcupacion = (fila.FinesAtencion[5].ACtiempoAtencion / fila.Reloj) * 100;
+
+                    return
+                }
+            }
+
+            fila.Colas[5].Clientes.Add(clienteTemporal);
+        }
+
+        private void ComienzaFinServicioEspecial(int servidor, Fila fila)
+        {
+            ClienteTemporal clienteTemporal = fila.FinesAtencion[5].Cliente[servidor];
+
+            if (fila.Colas[5].Clientes.Count != 0)
+            {
+
+                foreach (var cliente in fila.ClientesTemporales)
+                {
+                    if (cliente.Id == fila.Colas[5].Clientes[0].Id)
+                    {
+                        cliente.Estado = "Siendo Atendido";
+                        cliente.InicioAtencion = fila.Reloj;
+
+                        //Es el mismo cliente que encontramos en el condicional
+                        ClienteTemporal clienteCola = fila.Colas[5].Clientes[0];
+
+                        GenerarFinServicioEspecial(fila, clienteCola);
+
+                        fila.Colas[tipoServicio].Clientes.RemoveAt(0);
+                        return;
+                    }
+                }
+            }
+            //Lo dejo en cero para demostrar que no tiene una atencion
+            fila.FinesAtencion[5].HoraFinAtencion[servidor] = 0;
+            fila.Estados[5][servidor] = "Libre";
+
+            fila.ClientesTemporales.Remove(clienteTemporal);
+
+        }
+
+
     }
 }
