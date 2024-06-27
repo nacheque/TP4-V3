@@ -17,12 +17,20 @@ namespace borrador_de_tp4
         private int filaDesde;
         private List<int> listaMedias; //hay 11 medias que tienen correspondencia directa a la asignacion en el incio
         private bool caja5;
+        private int cantClientesTotal;
+        private int cantClientesSinServicioAdicional;
+        private double proxCorteLuz = 0;
+        private int tipoServicio;
+
+        private RK rk;
+
         public Simulacion(int n, int filaDesde, List<int> listaMedias, bool caja5)
         {
             InitializeComponent();
             this.cantidadFilas = n;
             this.filaDesde = filaDesde;
             this.listaMedias = listaMedias;
+            this.caja5 = caja5;
 
             //generar fila 0
 
@@ -105,6 +113,12 @@ namespace borrador_de_tp4
             fila.ClientesTemporales = clientesTemporales;
             fila.FinesAtencion = finesAtencion;
 
+            //revisar si el cliente quiere la quinta caja
+            if (this.caja5)
+            {
+                estadoCaja.Add("Libre");
+            }
+
             return fila;
         }
 
@@ -180,6 +194,17 @@ namespace borrador_de_tp4
             fila.Estados = estados;
             fila.ClientesTemporales = clientesTemporales;
 
+            //revisar si el cliente quiere la quinta caja
+            if (this.caja5)
+            {
+                if (estadoCaja.Count < 5)
+                {
+                    estadoCaja.Add("Libre");
+                }
+                finAtencionCaja.HoraFinAtencion.Add(0);
+                finAtencionCaja.Cliente.Add(clienteTemporalNulo);
+            }
+
             return fila;
         }
 
@@ -214,10 +239,32 @@ namespace borrador_de_tp4
 
             filaSiguiente.Evento = proximoEvento;
             filaSiguiente.Reloj = proximoTiempo;
+
             //Crea un nuevo cliente temporal para la proxima llegada
             ComienzoLlegada(filaSiguiente, tipoEvento);
 
             LlenarTabla(filaSiguiente, filaSiguiente.Evento);
+
+            //falta agregar alguna forma de verificar que las columnas se agreguen solo cuando llegue un cliente
+            int ultimaFila = grdSimulacion.Rows.Count - 1;
+            if (!grdSimulacion.Columns.Contains("estadoCliente"+ultimaFila))
+            {
+                DataGridViewColumn columnaCliente = new DataGridViewColumn();
+                columnaCliente.Name = "estadoCliente" + ultimaFila;
+                columnaCliente.HeaderText = "Estado";
+                columnaCliente.DataPropertyName = "estadoCliente" + ultimaFila;
+                columnaCliente.CellTemplate = new DataGridViewTextBoxCell();
+
+                DataGridViewColumn columnaSA = new DataGridViewColumn();
+                columnaSA.Name = "tomaServicio" + ultimaFila;
+                columnaSA.HeaderText = "Toma Servicio Adicional?";
+                columnaSA.CellTemplate = new DataGridViewTextBoxCell();
+
+                grdSimulacion.Columns.Add(columnaCliente);
+                grdSimulacion.Columns.Add(columnaSA);
+
+
+            }
 
             
         }
@@ -260,6 +307,7 @@ namespace borrador_de_tp4
 
                     //PORCENTAJE DE TIEMPO DE ESPERA
 
+
                     //COLAS
                     //cola cajas
                     grdSimulacion.Rows[ui].Cells["c15"].Value = fila.Colas[0].Clientes.Count().ToString();
@@ -293,6 +341,8 @@ namespace borrador_de_tp4
 
         private void GenerarProximaLlegada(Fila fila, int tipoServicio)
         {
+            cantClientesTotal += 1;
+
             Random random = new Random();
 
             // Generar un número decimal aleatorio entre 0.01 y 0.99
@@ -311,11 +361,11 @@ namespace borrador_de_tp4
             ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", 0, random.Next(1, 10000), tipoServicio, false);
 
             fila.ClientesTemporales.Add(clienteTemporal);
+            this.tipoServicio = tipoServicio;
 
             ServicioEspecialLlegada(fila, clienteTemporal);            
 
             GenerarFin(fila, tipoServicio, clienteTemporal);
-
         }
 
         private void ServicioEspecialLlegada(Fila fila, ClienteTemporal clienteTemporal){
@@ -347,10 +397,6 @@ namespace borrador_de_tp4
             } else {
                 clienteTemporal.TomaServicio = false;
             }
-        }
-
-        private void GenerarFinServicioAdicional(){
-
         }
 
         private void GenerarFin(Fila fila, int tipoServicio, ClienteTemporal clienteTemporal)
@@ -392,6 +438,9 @@ namespace borrador_de_tp4
         {
             ClienteTemporal clienteTemporal = fila.FinesAtencion[tipoServicio].Cliente[servidor];
 
+            fila.FinesAtencion[tipoServicio].HoraFinAtencion[servidor] = 0;
+            fila.Estados[tipoServicio][servidor] = "Libre";
+            
             if(fila.Colas[tipoServicio].Clientes.Count != 0){
 
                 foreach(var cliente in fila.ClientesTemporales){
@@ -402,6 +451,8 @@ namespace borrador_de_tp4
                         //Es el mismo cliente que encontramos en el condicional
                         ClienteTemporal clienteCola = fila.Colas[tipoServicio].Clientes[0];
 
+                        EstadisticasColas(fila, tipoServicio, clienteCola);
+
                         GenerarFin(fila, tipoServicio, clienteCola);
 
                         fila.Colas[tipoServicio].Clientes.RemoveAt(0);
@@ -410,16 +461,17 @@ namespace borrador_de_tp4
                 }
             }
             //Lo dejo en cero para demostrar que no tiene una atencion
-            fila.FinesAtencion[tipoServicio].HoraFinAtencion[servidor] = 0;
-            fila.Estados[tipoServicio][servidor] = "Libre";
+            
 
 
             if(clienteTemporal.TomaServicio == true)
             {
-                //Generar la funcion del servicio especial
+                GenerarFinServicioEspecial(fila, clienteTemporal);
             } else
             {
                 fila.ClientesTemporales.Remove(clienteTemporal);
+
+                cantClientesSinServicioAdicional += 1;
             }
 
         }
@@ -451,7 +503,7 @@ namespace borrador_de_tp4
                     fila.FinesAtencion[5].ACtiempoAtencion += fila.FinesAtencion[5].TiempoAtencion;
                     fila.FinesAtencion[5].PRCOcupacion = (fila.FinesAtencion[5].ACtiempoAtencion / fila.Reloj) * 100;
 
-                    return
+                    return;
                 }
             }
 
@@ -464,7 +516,8 @@ namespace borrador_de_tp4
 
             if (fila.Colas[5].Clientes.Count != 0)
             {
-
+                fila.FinesAtencion[5].HoraFinAtencion[servidor] = 0;
+                fila.Estados[5][servidor] = "Libre";
                 foreach (var cliente in fila.ClientesTemporales)
                 {
                     if (cliente.Id == fila.Colas[5].Clientes[0].Id)
@@ -475,21 +528,58 @@ namespace borrador_de_tp4
                         //Es el mismo cliente que encontramos en el condicional
                         ClienteTemporal clienteCola = fila.Colas[5].Clientes[0];
 
+                        EstadisticasColas(fila, 5, clienteCola);
+
                         GenerarFinServicioEspecial(fila, clienteCola);
 
-                        fila.Colas[tipoServicio].Clientes.RemoveAt(0);
+                        fila.Colas[5].Clientes.RemoveAt(0);
                         return;
                     }
                 }
             }
             //Lo dejo en cero para demostrar que no tiene una atencion
-            fila.FinesAtencion[5].HoraFinAtencion[servidor] = 0;
-            fila.Estados[5][servidor] = "Libre";
+            
 
             fila.ClientesTemporales.Remove(clienteTemporal);
 
         }
 
+        private void EstadisticasColas(Fila fila, int tipoServicio, ClienteTemporal clienteTemporal)
+        {
+            fila.Colas[tipoServicio].CantEsperas += 1;
+            fila.Colas[tipoServicio].AcTiempoEspera += fila.Reloj - clienteTemporal.InicioAtencion;
+            fila.Colas[tipoServicio].PrmTiempoEspera = fila.Colas[tipoServicio].AcTiempoEspera / fila.Colas[tipoServicio].CantEsperas;
+        }
+
+        //Iniciarlo desde el principio
+        private void CorteLuz(Fila fila){
+            Random random = new Random();
+
+            int t = 2;
+
+            double numeroDecimalAleatorio = random.NextDouble();
+
+            numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
+
+            if(numeroDecimalAleatorio < 0.20){
+                proxCorteLuz += fila.Reloj + 4 * t;
+            } 
+
+            if(0.20 < numeroDecimalAleatorio && numeroDecimalAleatorio < 0.60){
+                proxCorteLuz += fila.Reloj + 6 * t;
+            } else {
+                proxCorteLuz += fila.Reloj + 8 * t;
+            }
+
+        }
+
+        private void GenerarCorteLuz(Fila fila){
+            CorteLuz(fila);
+        }
+
+        private void ComienzoFinCorteLuz(Fila fila){
+            
+        }
 
     }
 }

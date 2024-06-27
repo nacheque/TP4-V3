@@ -31,6 +31,7 @@ namespace borrador_de_tp4
         }
         
         //Funcion que ejecuta el RK hasta que y (c) sea menor a 0 y devuelve la x (tiempo t) en segundos
+        //Xo = 0, Yo = tiempo de reloj
         public float ejecutarRK(float x0, float y0)
         {
             x = x0;
