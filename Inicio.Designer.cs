@@ -542,11 +542,11 @@
             this.txtIniciaDesde.AutoSize = true;
             this.txtIniciaDesde.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIniciaDesde.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.txtIniciaDesde.Location = new System.Drawing.Point(23, 610);
+            this.txtIniciaDesde.Location = new System.Drawing.Point(23, 608);
             this.txtIniciaDesde.Name = "txtIniciaDesde";
-            this.txtIniciaDesde.Size = new System.Drawing.Size(297, 20);
+            this.txtIniciaDesde.Size = new System.Drawing.Size(221, 20);
             this.txtIniciaDesde.TabIndex = 63;
-            this.txtIniciaDesde.Text = "Mostrar resultados desde la fila nro:";
+            this.txtIniciaDesde.Text = "Cantidad de filas a simular";
             // 
             // txtNroDesdeFila
             // 

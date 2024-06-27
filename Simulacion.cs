@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,6 +38,96 @@ namespace borrador_de_tp4
 
 
         }
+
+        public void FuncionCiclica(int cantEventos, Fila fila1, Fila fila2, int nroFila, int  nroLinea)
+        {
+            grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = fila1.NroFila;
+            string proxEvento = "";
+            int tipoEvento = -1;
+
+            int servidorFin = -1;
+            double proxTiempo = fila1.Llegada[0].ProximaLlegada;
+            fila2.NroFila = fila1.NroFila + 1;
+
+            if (cantEventos != 0)
+            {
+
+
+                for (int i = 0; i < fila1.Llegada.Count; i++)
+                {
+                    fila2.Llegada[i] = fila1.Llegada[i];
+                    if (proxTiempo > fila1.Llegada[i].ProximaLlegada)
+                    {
+                        proxTiempo = fila1.Llegada[i].ProximaLlegada;
+                        tipoEvento = i;
+                        proxEvento = fila1.Llegada[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
+                    }
+                }
+
+                for (int i = 0; i < fila1.FinesAtencion.Count; i++)
+                {
+                    fila2.FinesAtencion[i] = fila1.FinesAtencion[i];
+
+                    for (int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
+                    {
+                        if (proxTiempo > fila1.FinesAtencion[i].HoraFinAtencion[j] && fila1.FinesAtencion[i].HoraFinAtencion[j] > 0)
+                        {
+                            proxTiempo = fila1.FinesAtencion[i].HoraFinAtencion[j];
+                            tipoServicio = i;
+                            servidorFin = j;
+                            proxEvento = fila1.FinesAtencion[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
+                        }
+                    }
+                }
+
+                fila2.Colas = fila1.Colas;
+                fila2.Estados = fila1.Estados;
+                fila2.ClientesTemporales = fila1.ClientesTemporales;
+
+                fila2.Reloj = proxTiempo;
+                
+                if (servidorFin == -1)
+                {
+                    ComienzoLlegada(fila2, tipoEvento);
+                    
+
+                    //falta agregar alguna forma de verificar que las columnas se agreguen solo cuando llegue un cliente
+                    int ultimaFila = fila2.NroFila;
+                    string estadoCliente = "estadoCliente" + ultimaFila;
+                    string tomaServicio = "tomaServicio" + ultimaFila;
+                    if (!grdSimulacion.Columns.Contains(estadoCliente))
+                    {
+                        DataGridViewColumn columnaCliente = new DataGridViewColumn();
+                        columnaCliente.Name = estadoCliente;
+                        columnaCliente.HeaderText = "Estado" + ultimaFila;
+                        columnaCliente.DataPropertyName = estadoCliente;
+                        columnaCliente.CellTemplate = new DataGridViewTextBoxCell();
+
+                        DataGridViewColumn columnaSA = new DataGridViewColumn();
+                        columnaSA.Name = tomaServicio;
+                        columnaSA.HeaderText = "Toma Servicio Adicional?" + ultimaFila;
+                        columnaSA.CellTemplate = new DataGridViewTextBoxCell();
+
+                        grdSimulacion.Columns.Add(columnaCliente);
+                        grdSimulacion.Columns.Add(columnaSA);
+
+                        
+                    }
+                    
+                } 
+                else
+                {
+                    ComienzoFin(tipoEvento, servidorFin, fila2);
+                }
+
+                if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 10))
+                {
+                    LlenarTabla(fila2, proxEvento);
+                }
+                FuncionCiclica(cantEventos - 1, fila2, fila1, nroFila+1, nroLinea+1);
+            }
+        }
+    
 
         private Fila GenerarFila0(double reloj)
         {
@@ -99,11 +190,28 @@ namespace borrador_de_tp4
             finAtencionPrestamos.ACtiempoAtencion = 0;
             finAtencionServicioAdicional.ACtiempoAtencion = 0;
 
+            
+            finAtencionCaja.HoraFinAtencion = new List<double> { 0, 0, 0, 0 };
+            finAtencionPersonalizada.HoraFinAtencion = new List<double> { 0, 0, 0 };
+            finAtencionTarjetaCredito.HoraFinAtencion = new List<double> { 0, 0 };
+            finAtencionPlazoFijo.HoraFinAtencion = new List<double> { 0 };
+            finAtencionPrestamos.HoraFinAtencion = new List<double> { 0, 0 };
+            finAtencionServicioAdicional.HoraFinAtencion = new List<double> { 0, 0 };
+
             List<FinAtencion> finesAtencion = new List<FinAtencion> { finAtencionCaja, finAtencionPersonalizada, finAtencionTarjetaCredito, finAtencionPlazoFijo, finAtencionPrestamos, finAtencionServicioAdicional };
 
-
-
             List<ClienteTemporal> clientesTemporales = new List<ClienteTemporal>();
+
+            ClienteTemporal clienteTemporalNulo = new ClienteTemporal("", 0, 0, 0, false);
+
+            finAtencionCaja.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo };
+            finAtencionPersonalizada.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo };
+            finAtencionTarjetaCredito.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo };
+            finAtencionPlazoFijo.Cliente = new List<ClienteTemporal> { clienteTemporalNulo };
+            finAtencionPrestamos.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo };
+            finAtencionServicioAdicional.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo };
+
+
             Fila fila = new Fila();
             fila.Reloj = 0.0;
             fila.Evento = "Inicialización";
@@ -121,6 +229,7 @@ namespace borrador_de_tp4
 
             return fila;
         }
+
 
         private Fila GenerarFilaSiguiente()
         {
@@ -215,57 +324,46 @@ namespace borrador_de_tp4
             for (int i = 0; i < 300; i++)
             {
                 grdSimulacion.Rows.Add();
-                grdSimulacion.Rows[i].Cells["nroFila"].Value = i;
+                //grdSimulacion.Rows[i].Cells["nroFila"].Value = i;
             }
 
             Fila filaActual = GenerarFila0(0);
-            LlenarTabla(filaActual, "Inicializacion");
+            //LlenarTabla(filaActual, "Inicializacion");
             Fila filaSiguiente = GenerarFilaSiguiente();
-            
-            double proximoTiempo = filaActual.Llegada[0].ProximaLlegada;
-            int tipoEvento = 0;
-            string proximoEvento = "";
-            for (int i = 0; i < filaActual.Llegada.Count(); i++)
-            {
-                filaSiguiente.Llegada[i] = filaActual.Llegada[i];
-                if (proximoTiempo > filaActual.Llegada[i].ProximaLlegada)
-                {
-                    proximoTiempo = filaActual.Llegada[i].ProximaLlegada;
-                    tipoEvento = i;
-                    proximoEvento = filaActual.Llegada[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
-                }
-
-            }
-
-            filaSiguiente.Evento = proximoEvento;
-            filaSiguiente.Reloj = proximoTiempo;
+          
 
             //Crea un nuevo cliente temporal para la proxima llegada
-            ComienzoLlegada(filaSiguiente, tipoEvento);
 
-            LlenarTabla(filaSiguiente, filaSiguiente.Evento);
-
+            //LlenarTabla(filaSiguiente, filaSiguiente.Evento);
+            /*
             //falta agregar alguna forma de verificar que las columnas se agreguen solo cuando llegue un cliente
-            int ultimaFila = grdSimulacion.Rows.Count - 1;
-            if (!grdSimulacion.Columns.Contains("estadoCliente"+ultimaFila))
+            int ultimaFila = filaSiguiente.NroFila;
+            string estadoCliente = "estadoCliente" + ultimaFila;
+            string tomaServicio = "tomaServicio" + ultimaFila;
+            if (!grdSimulacion.Columns.Contains(estadoCliente))
             {
                 DataGridViewColumn columnaCliente = new DataGridViewColumn();
-                columnaCliente.Name = "estadoCliente" + ultimaFila;
-                columnaCliente.HeaderText = "Estado";
-                columnaCliente.DataPropertyName = "estadoCliente" + ultimaFila;
+                columnaCliente.Name = estadoCliente;
+                columnaCliente.HeaderText = "Estado"+ultimaFila;
+                columnaCliente.DataPropertyName = estadoCliente;
                 columnaCliente.CellTemplate = new DataGridViewTextBoxCell();
 
                 DataGridViewColumn columnaSA = new DataGridViewColumn();
-                columnaSA.Name = "tomaServicio" + ultimaFila;
-                columnaSA.HeaderText = "Toma Servicio Adicional?";
+                columnaSA.Name = tomaServicio;
+                columnaSA.HeaderText = "Toma Servicio Adicional?" + ultimaFila;
                 columnaSA.CellTemplate = new DataGridViewTextBoxCell();
 
                 grdSimulacion.Columns.Add(columnaCliente);
                 grdSimulacion.Columns.Add(columnaSA);
+                
+                //hay que verificar el acceso a los clientes de la fila
+                grdSimulacion.Rows[ultimaFila].Cells[estadoCliente].Value = filaSiguiente.ClientesTemporales[ultimaFila-1].Estado;
+                grdSimulacion.Rows[ultimaFila].Cells[tomaServicio].Value = filaSiguiente.ClientesTemporales[ultimaFila - 1].TomaServicio;
+                
 
-
-            }
-
+                
+            }*/
+            FuncionCiclica(this.cantidadFilas, filaActual, filaSiguiente, this.filaDesde, 0);
             
         }
 
@@ -278,7 +376,9 @@ namespace borrador_de_tp4
 
                 if (valor == "" || valor == null)
                 {
-                    grdSimulacion.Rows[ui].Cells["c1"].Value = fila.Evento;
+                    fila.NroFila = ui;
+                    
+                    grdSimulacion.Rows[ui].Cells["c1"].Value = proximoEvento;
                     grdSimulacion.Rows[ui].Cells["c2"].Value = fila.Reloj;
                     //EVENTO LLEGADA CLIENTE
                     //llegada clientes caja
@@ -296,6 +396,7 @@ namespace borrador_de_tp4
                     //llegada cliente prestamos
                     grdSimulacion.Rows[ui].Cells["c11"].Value = fila.Llegada[4].TiempoEntreLlegada.ToString();
                     grdSimulacion.Rows[ui].Cells["c12"].Value = fila.Llegada[4].ProximaLlegada.ToString();
+                    
 
                     //ACUMULADORES DE TIEMPO DE ESPERA
                     grdSimulacion.Rows[ui].Cells["c16"].Value = fila.FinesAtencion[0].ACtiempoAtencion.ToString();
@@ -322,7 +423,10 @@ namespace borrador_de_tp4
                     grdSimulacion.Rows[ui].Cells["c67"].Value = fila.Estados[0][1];
                     grdSimulacion.Rows[ui].Cells["c68"].Value = fila.Estados[0][2];
                     grdSimulacion.Rows[ui].Cells["c69"].Value = fila.Estados[0][3];
-                    //grdSimulacion.Rows[0].Cells["c70"].Value = fila.Estados[0][4];
+                    if (fila.Estados[0].Count == 5)
+                    {
+                        grdSimulacion.Rows[0].Cells["c70"].Value = fila.Estados[0][4];
+                    }
                     grdSimulacion.Rows[ui].Cells["c71"].Value = fila.Estados[1][0];
                     grdSimulacion.Rows[ui].Cells["c72"].Value = fila.Estados[1][1];
                     grdSimulacion.Rows[ui].Cells["c73"].Value = fila.Estados[1][2];
@@ -357,6 +461,8 @@ namespace borrador_de_tp4
 
         private void ComienzoLlegada(Fila fila, int tipoServicio)
         {
+            
+            MessageBox.Show("Comienzo Llegada");
             Random random = new Random();
             ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", 0, random.Next(1, 10000), tipoServicio, false);
 
@@ -364,6 +470,8 @@ namespace borrador_de_tp4
             this.tipoServicio = tipoServicio;
 
             ServicioEspecialLlegada(fila, clienteTemporal);            
+
+            GenerarProximaLlegada(fila, tipoServicio);
 
             GenerarFin(fila, tipoServicio, clienteTemporal);
         }
@@ -382,6 +490,8 @@ namespace borrador_de_tp4
             } else {
                 clienteTemporal.TomaServicio = false;
             }
+            grdSimulacion.Rows[fila.NroFila].Cells["c13"].Value = clienteTemporal.TomaServicio;
+            clienteTemporal.NroFilaCliente = fila.NroFila;
         }
 
         private void ServicioEspecialFin(Fila fila, ClienteTemporal clienteTemporal){
@@ -405,8 +515,9 @@ namespace borrador_de_tp4
             {
                 if (fila.Estados[tipoServicio][i] == "Libre")
                 {
-                    
+
                     fila.Estados[tipoServicio][i] = "Ocupado";
+
                     clienteTemporal.Estado = "Siendo Atendido";
                     clienteTemporal.InicioAtencion = fila.Reloj;
 
@@ -426,25 +537,30 @@ namespace borrador_de_tp4
                     fila.FinesAtencion[tipoServicio].ACtiempoAtencion += fila.FinesAtencion[tipoServicio].TiempoAtencion;
                     fila.FinesAtencion[tipoServicio].PRCOcupacion = (fila.FinesAtencion[tipoServicio].ACtiempoAtencion / fila.Reloj) * 100;
 
+                    //los fines de atenion se guardan en las columnas de la 36 a la 40
+                    /*
+                    for (int i = 0; i < fila.FinesAtencion[tipoServicio].Count; i++)
+                    {
+                        
+                    }
+                    */
                     return;
                 }
             }
-
-            fila.Colas[tipoServicio].Clientes.Add(clienteTemporal);
-
         }
-        
+
         private void ComienzoFin(int tipoServicio, int servidor, Fila fila)
         {
+            MessageBox.Show("Comienzo fin");
             ClienteTemporal clienteTemporal = fila.FinesAtencion[tipoServicio].Cliente[servidor];
 
             fila.FinesAtencion[tipoServicio].HoraFinAtencion[servidor] = 0;
             fila.Estados[tipoServicio][servidor] = "Libre";
-            
-            if(fila.Colas[tipoServicio].Clientes.Count != 0){
 
-                foreach(var cliente in fila.ClientesTemporales){
-                    if(cliente.Id == fila.Colas[tipoServicio].Clientes[0].Id){
+            if (fila.Colas[tipoServicio].Clientes.Count != 0) {
+
+                foreach (var cliente in fila.ClientesTemporales) {
+                    if (cliente.Id == fila.Colas[tipoServicio].Clientes[0].Id) {
                         cliente.Estado = "Siendo Atendido";
                         cliente.InicioAtencion = fila.Reloj;
 
@@ -459,19 +575,6 @@ namespace borrador_de_tp4
                         return;
                     }
                 }
-            }
-            //Lo dejo en cero para demostrar que no tiene una atencion
-            
-
-
-            if(clienteTemporal.TomaServicio == true)
-            {
-                GenerarFinServicioEspecial(fila, clienteTemporal);
-            } else
-            {
-                fila.ClientesTemporales.Remove(clienteTemporal);
-
-                cantClientesSinServicioAdicional += 1;
             }
 
         }

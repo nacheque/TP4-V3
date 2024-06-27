@@ -10,6 +10,7 @@ namespace borrador_de_tp4
 {
     public class Fila
     {
+        private int nroFila;
         private double reloj;
         private string evento;
 
@@ -21,7 +22,7 @@ namespace borrador_de_tp4
         private Llegada llegadaPrestamos;
         private Llegada llegadaServicioAdicional;
         */
-        
+
         private List<Llegada> llegada;
         /*
         private Cola colaCaja;
@@ -79,19 +80,25 @@ namespace borrador_de_tp4
         public List<ClienteTemporal> ClientesTemporales
         {
             get { return clientesTemporales; }
-            set {  clientesTemporales = value; }
+            set { clientesTemporales = value; }
         }
 
         public double Reloj
         {
             get { return reloj; }
-            set { reloj = value;}
+            set { reloj = value; }
         }
 
         public string Evento
         {
-            get { return evento;}
+            get { return evento; }
             set { evento = value; }
+        }
+
+        public int NroFila
+        {
+            get { return nroFila; }
+            set { nroFila = value; }
         }
     }
 }

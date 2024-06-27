@@ -13,7 +13,14 @@ namespace borrador_de_tp4
         private int id;
         private int tipoServicio;
         private bool tomaServicio;
+        private int nroFilaCliente;
 
+        public int NroFilaCliente
+        {
+            get { return nroFilaCliente; }
+            set { nroFilaCliente = value; }
+        }
+        
         public string Estado
         {
             get {  return estado; }
