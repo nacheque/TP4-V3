@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.WebSockets;
@@ -52,7 +53,8 @@ namespace borrador_de_tp4
           
                FuncionCiclica(this.cantidadFilas, fila, this.filaDesde, 0, 0); 
         }
-        public void FuncionCiclica(int cantEventos, Fila fila1, int nroFila, int  nroLinea, int tipoEvento)
+
+        /*public void FuncionCiclica(int cantEventos, Fila fila1, int nroFila, int  nroLinea, int tipoEvento)
         {
             
 
@@ -63,17 +65,10 @@ namespace borrador_de_tp4
             
 
             int servidorFin = -1;
-            double proxTiempo = fila1.Llegada[0].ProximaLlegada;
+            double proxTiempo = 10000000;
             
             //fila2.NroFila = fila1.NroFila + 1;
-            /*
-            List<double> listaTiemposLlegada = new List<double>();
-            List<int> listaTipoEventoLlegada = new List<int>();
-
-            List<double> listaTiemposFin = new List<double>();
-            List<int> listaTipoEventoFin = new List<int>();
-            List<int> listaServidorFin = new List<int>
-            */
+          
 
             if (cantEventos != 0)
             {
@@ -81,7 +76,6 @@ namespace borrador_de_tp4
                 for (int i = 0; i < fila1.Llegada.Count; i++)
                 {
                     
-                    //listaTipoEventoLlegada.Add(i);
                     if (proxTiempo > fila1.Llegada[i].ProximaLlegada)
                     {
                         
@@ -91,22 +85,13 @@ namespace borrador_de_tp4
                     }
                 }
             
-            //proxTiempoLlegada = listaTiemposLlegada.Min();
-            //tipoEventoLlegada = listaTiemposLlegada.IndexOf(proxTiempoLlegada);
 
                 for (int i = 0; i < fila1.FinesAtencion.Count; i++)
                 {
-                    //fila2.FinesAtencion[i] = fila1.FinesAtencion[i];
                     
                     for (int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
                     {
-                        /*
-                        if(fila1.FinesAtencion[i].HoraFinAtencion[j] != 0){
-                            listaTiemposFin.Add(fila1.FinesAtencion[i].HoraFinAtencion[j]);
-                            listaTipoEventoFin.Add(i);
-                            listaServidorFin.Add(j);
-                        }
-                        */
+
 
                         
                         if (proxTiempo > fila1.FinesAtencion[i].HoraFinAtencion[j] && fila1.FinesAtencion[i].HoraFinAtencion[j] != 0)
@@ -120,20 +105,14 @@ namespace borrador_de_tp4
                         }
                     }
                 }
-            //proxTiempoFin = listaTiemposFin.Min();
-            //tipoEventoFin = listaTiemposFin.IndexOf(proxTiempoFin);
 
-                //fila2.Colas = fila1.Colas;
-                //fila2.Estados = fila1.Estados;
-                //fila2.ClientesTemporales = fila1.ClientesTemporales;
+
 
                 //fila2.Reloj = proxTiempo;
 
                 //Fila fila2 = new Fila();
 
-            //if(proxTiempoFin < proxTiempoLlegada){
-                //tipoEvento = 
-                //
+
             }
             //fila2.Reloj = fila2.Reloj + proxTiempo;
 
@@ -178,14 +157,126 @@ namespace borrador_de_tp4
                 
                 if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 10))
                 {
-                    LlenarTabla(fila1, proxEvento, fila1.Reloj + proxTiempo);
+                    LlenarTabla(fila1, proxEvento, proxTiempo);
                 }
 
                 Fila fila2 = fila1;
-                fila2.Reloj = fila1.Reloj + proxTiempo;
+                fila2.Reloj = proxTiempo;
                 FuncionCiclica(cantEventos - 1, fila2, nroFila+1, nroLinea+1, tipoEvento);
+
+
+        }*/
+        public void FuncionCiclica(int cantEventos, Fila fila1, int nroFila, int nroLinea, int tipoEvento)
+        {
+            grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = fila1.NroFila;
+            string proxEvento = "";
+            int servidorFin = -1;
+            double proxTiempo = double.MaxValue; // Usar el valor máximo para asegurar que cualquier tiempo sea menor
+
+            if (cantEventos != 0)
+            {
+                double menorLlegada = double.MaxValue;
+                double menorFinAtencion = double.MaxValue;
+                int indiceLlegada = -1;
+                int indiceFinAtencion = -1;
+                int subIndiceFinAtencion = -1;
+
+                // Encontrar el menor tiempo de llegada
+                for (int i = 0; i < fila1.Llegada.Count; i++)
+                {
+                    if (menorLlegada > fila1.Llegada[i].ProximaLlegada)
+                    {
+                        menorLlegada = fila1.Llegada[i].ProximaLlegada;
+                        indiceLlegada = i;
+                    }
+                }
+
+                // Encontrar el menor tiempo de fin de atención
+                for (int i = 0; i < fila1.FinesAtencion.Count; i++)
+                {
+                    for (int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
+                    {
+                        if (menorFinAtencion > fila1.FinesAtencion[i].HoraFinAtencion[j] && fila1.FinesAtencion[i].HoraFinAtencion[j] != 0)
+                        {
+                            menorFinAtencion = fila1.FinesAtencion[i].HoraFinAtencion[j];
+                            indiceFinAtencion = i;
+                            subIndiceFinAtencion = j;
+                        }
+                    }
+                }
+
+                // Determinar el menor entre los dos tiempos encontrados
+                if (menorLlegada <= menorFinAtencion)
+                {
+                    proxTiempo = menorLlegada;
+                    tipoEvento = indiceLlegada;
+                    proxEvento = fila1.Llegada[indiceLlegada].GetType().Name.ToString() + "[" + tipoEvento + "]";
+                    servidorFin = -1; // Indica que no es un fin de atención
+                }
+                else
+                {
+                    proxTiempo = menorFinAtencion;
+                    tipoEvento = indiceFinAtencion;
+                    proxEvento = fila1.FinesAtencion[indiceFinAtencion].GetType().Name.ToString() + "[" + tipoEvento + "]";
+                    servidorFin = subIndiceFinAtencion; // Indica el servidor que termina la atención
+                }
+
+                // Asegurarse de que se ha encontrado un tiempo válido
+                if (proxTiempo == double.MaxValue)
+                {
+                    Console.WriteLine("No se encontró un próximo tiempo válido.");
+                    return; // Salir si no se encontró un tiempo válido
+                }
+
+                if (servidorFin == -1)
+                {
+                    Console.WriteLine("Comenzando llegada...");
+                    ComienzoLlegada(fila1, tipoEvento);
+
+                    // Verificar y agregar columnas si es necesario
+                    int ultimaFila = fila1.NroFila;
+                    string estadoCliente = "estadoCliente" + ultimaFila;
+                    string tomaServicio = "tomaServicio" + ultimaFila;
+                    if (!grdSimulacion.Columns.Contains(estadoCliente))
+                    {
+                        DataGridViewColumn columnaCliente = new DataGridViewColumn();
+                        columnaCliente.Name = estadoCliente;
+                        columnaCliente.HeaderText = "Estado" + ultimaFila;
+                        columnaCliente.DataPropertyName = estadoCliente;
+                        columnaCliente.CellTemplate = new DataGridViewTextBoxCell();
+
+                        DataGridViewColumn columnaSA = new DataGridViewColumn();
+                        columnaSA.Name = tomaServicio;
+                        columnaSA.HeaderText = "Toma Servicio Adicional?" + ultimaFila;
+                        columnaSA.CellTemplate = new DataGridViewTextBoxCell();
+
+                        grdSimulacion.Columns.Add(columnaCliente);
+                        grdSimulacion.Columns.Add(columnaSA);
+                        Console.WriteLine("Columnas agregadas para el nuevo cliente.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Comenzando fin de atención...");
+                    ComienzoFin(tipoEvento, servidorFin, fila1);
+                }
+
+                if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 10))
+                {
+                    Console.WriteLine("Llenando la tabla...");
+                    LlenarTabla(fila1, proxEvento, fila1.Reloj + proxTiempo);
+                }
+
+                Fila fila2 = (Fila)fila1.Clone(); // Asumiendo que Fila implementa ICloneable
+                fila2.Reloj = fila1.Reloj + proxTiempo;
+
+                Console.WriteLine($"Preparándose para la siguiente recursión: cantEventos={cantEventos - 1}, proxTiempo={proxTiempo}, fila2.Reloj={fila2.Reloj}");
+                FuncionCiclica(cantEventos - 1, fila2, nroFila + 1, nroLinea + 1, tipoEvento);
             }
+
+            Debug.Log("Tipo Evento: " + tipoEvento + "  -  Servidor: " + servidorFin + "   -  proxTiempo:" + proxTiempo);
         }
+
 
         private Fila GenerarFila(double reloj)
         {
@@ -496,7 +587,6 @@ namespace borrador_de_tp4
 
         private void ComienzoFin(int tipoServicio, int servidor, Fila fila)
         {
-            MessageBox.Show("Comienzo fin");
             ClienteTemporal clienteTemporal = fila.FinesAtencion[tipoServicio].Cliente[servidor];
 
             fila.FinesAtencion[tipoServicio].HoraFinAtencion[servidor] = 0;
