@@ -38,8 +38,23 @@ namespace borrador_de_tp4
 
 
         }
+        private void Simulacion_Load(object sender, EventArgs e)
+        {
 
-        public void FuncionCiclica(int cantEventos, Fila fila1, Fila fila2, int nroFila, int  nroLinea)
+               //llenar la tabla con 300 filas
+               for (int i = 0; i < 300; i++)
+               {
+                   grdSimulacion.Rows.Add();
+                   //grdSimulacion.Rows[i].Cells["nroFila"].Value = i;
+               }
+
+               //Fila filaActual = GenerarFila0(0);
+               //LlenarTabla(filaActual, "Inicializacion");
+               Fila fila = GenerarFila(0);
+          
+               FuncionCiclica(this.cantidadFilas, fila, this.filaDesde, 0); 
+        }
+        public void FuncionCiclica(int cantEventos, Fila fila1, int nroFila, int  nroLinea)
         {
             grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = fila1.NroFila;
             string proxEvento = "";
@@ -47,15 +62,13 @@ namespace borrador_de_tp4
 
             int servidorFin = -1;
             double proxTiempo = fila1.Llegada[0].ProximaLlegada;
-            fila2.NroFila = fila1.NroFila + 1;
+            //fila2.NroFila = fila1.NroFila + 1;
 
             if (cantEventos != 0)
             {
-
-
                 for (int i = 0; i < fila1.Llegada.Count; i++)
                 {
-                    fila2.Llegada[i] = fila1.Llegada[i];
+                    //fila2.Llegada[i] = fila1.Llegada[i];
                     if (proxTiempo > fila1.Llegada[i].ProximaLlegada)
                     {
                         proxTiempo = fila1.Llegada[i].ProximaLlegada;
@@ -66,7 +79,7 @@ namespace borrador_de_tp4
 
                 for (int i = 0; i < fila1.FinesAtencion.Count; i++)
                 {
-                    fila2.FinesAtencion[i] = fila1.FinesAtencion[i];
+                    //fila2.FinesAtencion[i] = fila1.FinesAtencion[i];
 
                     for (int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
                     {
@@ -80,11 +93,15 @@ namespace borrador_de_tp4
                     }
                 }
 
-                fila2.Colas = fila1.Colas;
-                fila2.Estados = fila1.Estados;
-                fila2.ClientesTemporales = fila1.ClientesTemporales;
+                //fila2.Colas = fila1.Colas;
+                //fila2.Estados = fila1.Estados;
+                //fila2.ClientesTemporales = fila1.ClientesTemporales;
 
-                fila2.Reloj = proxTiempo;
+                //fila2.Reloj = proxTiempo;
+
+                //Fila fila2 = new Fila();
+                Fila fila2 = fila1;
+                //fila2.Reloj = proxTiempo;
                 
                 if (servidorFin == -1)
                 {
@@ -122,15 +139,18 @@ namespace borrador_de_tp4
 
                 if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 10))
                 {
-                    LlenarTabla(fila2, proxEvento);
+                    LlenarTabla(fila1, proxEvento);
                 }
-                FuncionCiclica(cantEventos - 1, fila2, fila1, nroFila+1, nroLinea+1);
+                FuncionCiclica(cantEventos - 1, fila2, nroFila+1, nroLinea+1);
             }
         }
-    
 
-        private Fila GenerarFila0(double reloj)
+        private Fila GenerarFila(double reloj)
         {
+            Fila fila = new Fila();
+            fila.Reloj = reloj;
+            fila.Evento = "Inicialización";
+
             //primero hay que generar todas las proximas llegadas de los 6 servicios
 
             Llegada llegadaCaja = new Llegada();
@@ -141,108 +161,19 @@ namespace borrador_de_tp4
             //Llegada llegadaServicioAdicional = new Llegada();
 
             List<Llegada> llegadas = new List<Llegada> { llegadaCaja, llegadaAtencionPersonalizada, llegadaTarjeta, llegadaPlazoFijo, llegadaPrestamos };
-            for (int i = 0; i < 5; i++)
+
+            if (fila.Evento == "Inicialización")
             {
-                Random rnd = new Random();
-                double tiempoEntreLlegada = -(listaMedias[i]) * Math.Log(1 - (double)rnd.NextDouble());
-                tiempoEntreLlegada = Math.Round(tiempoEntreLlegada, 2);
-                llegadas[i].TiempoEntreLlegada = tiempoEntreLlegada;
-                llegadas[i].ProximaLlegada = tiempoEntreLlegada + reloj;
-                llegadas[i].Media = this.listaMedias[i];
+                for (int i = 0; i < 5; i++)
+                {
+                    Random rnd = new Random();
+                    double tiempoEntreLlegada = -(listaMedias[i]) * Math.Log(1 - (double)rnd.NextDouble());
+                    tiempoEntreLlegada = Math.Round(tiempoEntreLlegada, 2);
+                    llegadas[i].TiempoEntreLlegada = tiempoEntreLlegada;
+                    llegadas[i].ProximaLlegada = tiempoEntreLlegada + fila.Reloj;
+                    llegadas[i].Media = this.listaMedias[i];
+                }
             }
-
-            Cola colaCaja = new Cola();
-            Cola colaAtencionPersonalizada = new Cola();
-            Cola colaTarjetaCredito = new Cola();
-            Cola colaPlazoFijo = new Cola();
-            Cola colaPrestamos = new Cola();
-            Cola colaServicioAdicional = new Cola();
-
-            colaCaja.Clientes = new List<ClienteTemporal>();
-            colaAtencionPersonalizada.Clientes = new List<ClienteTemporal>();
-            colaTarjetaCredito.Clientes = new List<ClienteTemporal>();
-            colaPlazoFijo.Clientes = new List<ClienteTemporal>();
-            colaPrestamos.Clientes = new List<ClienteTemporal>();
-            colaServicioAdicional.Clientes = new List<ClienteTemporal>();
-
-            List<Cola> colas = new List<Cola> { colaCaja, colaAtencionPersonalizada, colaTarjetaCredito, colaPlazoFijo, colaPrestamos, colaServicioAdicional };
-
-            List<string> estadoCaja = new List<string> { "Libre", "Libre", "Libre", "Libre" };
-            List<string> estadoAtencionPersonalizada = new List<string> { "Libre", "Libre", "Libre"};
-            List<string> estadoTarjetaCredito = new List<string> { "Libre", "Libre"};
-            List<string> estadoPlazoFijo = new List<string> { "Libre"};
-            List<string> estadoPrestamos = new List<string> { "Libre", "Libre"};
-            List<string> estadoServicioAdicional = new List<string> { "Libre", "Libre"};
-            List<List<string>> estados = new List<List<string>> { estadoCaja, estadoAtencionPersonalizada, estadoTarjetaCredito, estadoPlazoFijo, estadoPrestamos, estadoServicioAdicional };
-
-
-            FinAtencion finAtencionCaja = new FinAtencion();
-            FinAtencion finAtencionPersonalizada = new FinAtencion();
-            FinAtencion finAtencionTarjetaCredito = new FinAtencion();
-            FinAtencion finAtencionPlazoFijo = new FinAtencion();
-            FinAtencion finAtencionPrestamos = new FinAtencion();
-            FinAtencion finAtencionServicioAdicional = new FinAtencion();
-
-            finAtencionCaja.ACtiempoAtencion = 0;
-            finAtencionPersonalizada.ACtiempoAtencion = 0;
-            finAtencionTarjetaCredito.ACtiempoAtencion = 0;
-            finAtencionPlazoFijo.ACtiempoAtencion = 0;
-            finAtencionPrestamos.ACtiempoAtencion = 0;
-            finAtencionServicioAdicional.ACtiempoAtencion = 0;
-
-            
-            finAtencionCaja.HoraFinAtencion = new List<double> { 0, 0, 0, 0 };
-            finAtencionPersonalizada.HoraFinAtencion = new List<double> { 0, 0, 0 };
-            finAtencionTarjetaCredito.HoraFinAtencion = new List<double> { 0, 0 };
-            finAtencionPlazoFijo.HoraFinAtencion = new List<double> { 0 };
-            finAtencionPrestamos.HoraFinAtencion = new List<double> { 0, 0 };
-            finAtencionServicioAdicional.HoraFinAtencion = new List<double> { 0, 0 };
-
-            List<FinAtencion> finesAtencion = new List<FinAtencion> { finAtencionCaja, finAtencionPersonalizada, finAtencionTarjetaCredito, finAtencionPlazoFijo, finAtencionPrestamos, finAtencionServicioAdicional };
-
-            List<ClienteTemporal> clientesTemporales = new List<ClienteTemporal>();
-
-            ClienteTemporal clienteTemporalNulo = new ClienteTemporal("", 0, 0, 0, false);
-
-            finAtencionCaja.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo };
-            finAtencionPersonalizada.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo };
-            finAtencionTarjetaCredito.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo };
-            finAtencionPlazoFijo.Cliente = new List<ClienteTemporal> { clienteTemporalNulo };
-            finAtencionPrestamos.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo };
-            finAtencionServicioAdicional.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo };
-
-
-            Fila fila = new Fila();
-            fila.Reloj = 0.0;
-            fila.Evento = "Inicialización";
-            fila.Llegada = llegadas;
-            fila.Colas = colas;
-            fila.Estados = estados;
-            fila.ClientesTemporales = clientesTemporales;
-            fila.FinesAtencion = finesAtencion;
-
-            //revisar si el cliente quiere la quinta caja
-            if (this.caja5)
-            {
-                estadoCaja.Add("Libre");
-            }
-
-            return fila;
-        }
-
-
-        private Fila GenerarFilaSiguiente()
-        {
-            //primero hay que generar todas las proximas llegadas de los 6 servicios
-
-            Llegada llegadaCaja = new Llegada();
-            Llegada llegadaAtencionPersonalizada = new Llegada();
-            Llegada llegadaTarjeta = new Llegada();
-            Llegada llegadaPlazoFijo = new Llegada();
-            Llegada llegadaPrestamos = new Llegada();
-            //Llegada llegadaServicioAdicional = new Llegada();
-
-            List<Llegada> llegadas = new List<Llegada> { llegadaCaja, llegadaAtencionPersonalizada, llegadaTarjeta, llegadaPlazoFijo, llegadaPrestamos };            
 
             Cola colaCaja = new Cola();
             Cola colaAtencionPersonalizada = new Cola();
@@ -294,9 +225,7 @@ namespace borrador_de_tp4
             List<List<string>> estados = new List<List<string>> { estadoCaja, estadoAtencionPersonalizada, estadoTarjetaCredito, estadoPlazoFijo, estadoPrestamos, estadoServicioAdicional };
 
             List<ClienteTemporal> clientesTemporales = new List<ClienteTemporal>();
-            Fila fila = new Fila();
-            fila.Reloj = 0.0;
-            fila.Evento = "Inicialización";
+            
             fila.Llegada = llegadas;
             fila.Colas = colas;
             fila.FinesAtencion = finesAtencion;
@@ -317,55 +246,7 @@ namespace borrador_de_tp4
             return fila;
         }
 
-        private void Simulacion_Load(object sender, EventArgs e)
-        {
-
-            //llenar la tabla con 300 filas
-            for (int i = 0; i < 300; i++)
-            {
-                grdSimulacion.Rows.Add();
-                //grdSimulacion.Rows[i].Cells["nroFila"].Value = i;
-            }
-
-            Fila filaActual = GenerarFila0(0);
-            //LlenarTabla(filaActual, "Inicializacion");
-            Fila filaSiguiente = GenerarFilaSiguiente();
-          
-
-            //Crea un nuevo cliente temporal para la proxima llegada
-
-            //LlenarTabla(filaSiguiente, filaSiguiente.Evento);
-            /*
-            //falta agregar alguna forma de verificar que las columnas se agreguen solo cuando llegue un cliente
-            int ultimaFila = filaSiguiente.NroFila;
-            string estadoCliente = "estadoCliente" + ultimaFila;
-            string tomaServicio = "tomaServicio" + ultimaFila;
-            if (!grdSimulacion.Columns.Contains(estadoCliente))
-            {
-                DataGridViewColumn columnaCliente = new DataGridViewColumn();
-                columnaCliente.Name = estadoCliente;
-                columnaCliente.HeaderText = "Estado"+ultimaFila;
-                columnaCliente.DataPropertyName = estadoCliente;
-                columnaCliente.CellTemplate = new DataGridViewTextBoxCell();
-
-                DataGridViewColumn columnaSA = new DataGridViewColumn();
-                columnaSA.Name = tomaServicio;
-                columnaSA.HeaderText = "Toma Servicio Adicional?" + ultimaFila;
-                columnaSA.CellTemplate = new DataGridViewTextBoxCell();
-
-                grdSimulacion.Columns.Add(columnaCliente);
-                grdSimulacion.Columns.Add(columnaSA);
-                
-                //hay que verificar el acceso a los clientes de la fila
-                grdSimulacion.Rows[ultimaFila].Cells[estadoCliente].Value = filaSiguiente.ClientesTemporales[ultimaFila-1].Estado;
-                grdSimulacion.Rows[ultimaFila].Cells[tomaServicio].Value = filaSiguiente.ClientesTemporales[ultimaFila - 1].TomaServicio;
-                
-
-                
-            }*/
-            FuncionCiclica(this.cantidadFilas, filaActual, filaSiguiente, this.filaDesde, 0);
-            
-        }
+        
 
         private void LlenarTabla(Fila fila, string proximoEvento)
         {
