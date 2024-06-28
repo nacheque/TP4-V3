@@ -56,7 +56,6 @@ namespace borrador_de_tp4
 
         public void FuncionCiclica(int cantEventos, Fila fila1, int nroFila, int  nroLinea)
         {
-
             grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = fila1.NroFila;
             string proxEvento = "";
             int tipoEvento = 0;
@@ -75,45 +74,7 @@ namespace borrador_de_tp4
 
             if (cantEventos != 0)
             {
-                for(int i = 0; i < fila1.Llegada[i].Count; i++)
-                {
-                    if(proxTiempoLlegada > fila1.Llegada[i].ProximaLlegada)
-                    {
-                        proxTiempoLlegada = fila1.Llegada[i].ProximaLlegada
-                        tipoEventoLlegada = i;
-                    }
-                }
-                
-                for(int i = 0; i < fila1.FinesAtencion.Count; i++)
-                {
-                    for(int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
-                    {
-                        if (fila1.FinesAtencion[i].HoraFinAtencion[j] > 0)
-                        {
-                            if(proxTiempoFin > fila1.FinesAtencion[i].HoraFinAtencion[j])
-                            {
-                                proxTiempoFin = fila1.FinesAtencion[i].HoraFinAtencion[j];
-                                tipoEventoFin = i;
-                                servidor = j;
-                            }
-                        }
-                    }
-                }
-                
 
-                if(proxTiempoLlegada < proxTiempoFin)
-                {
-                    proxTiempo = proxTiempoLlegada;
-                    tipoEvento = tipoEventoLlegada;
-                } else
-                {
-                    esLlegada = false;
-                    proxTiempo = proxTiempoFin;
-                    tipoEvento = tipoEventoFin;
-                    servidorFin = servidor;
-                }
-
-                /*
                 for (int i = 0; i < fila1.Llegada.Count; i++)
                 {
                     
@@ -124,7 +85,7 @@ namespace borrador_de_tp4
                         tipoEventoLlegada = i;
                         proxEvento = fila1.Llegada[i].GetType().Name.ToString() + "[" + tipoEventoLlegada + "]";
                     }
-                }*/
+                }
 
 
                 /*for (int i = 0; i < fila1.FinesAtencion.Count; i++)
@@ -146,18 +107,22 @@ namespace borrador_de_tp4
                 }*/
 
 
-                //proxTiempo = Math.Min(proxTiempoLlegada, proxTiempoFin);
-                /*if(proxTiempoLlegada < proxTiempoFin)
+                proxTiempo = Math.Min(proxTiempoLlegada, proxTiempoFin);
+                tipoEvento = tipoEventoLlegada;
+
+
+                /*
+                if(proxTiempoLlegada < proxTiempoFin)
                 {
-                    
+                    proxTiempo = proxTiempoLlegada;
+                    tipoEvento = tipoEventoLlegada;
                 } else
                 {
+                    esLlegada = false;
                     proxTiempo = proxTiempoFin;
                     tipoEvento = tipoEventoFin;
                     servidorFin = servidor;
                 }*/
-                proxTiempo = proxTiempoLlegada;
-                tipoEvento = tipoEventoLlegada;
 
                 fila1.Reloj = proxTiempo;
 
