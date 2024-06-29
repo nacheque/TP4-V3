@@ -60,15 +60,12 @@ namespace borrador_de_tp4
             string proxEvento = "";
             int tipoEvento = 0;
 
-            int tipoEventoLlegada = 0;
-            int tipoEventoFin = 0;
-            int servidor = 0;
+
             bool esLlegada = true;
 
             int servidorFin = -1;
-            double proxTiempo;
-            double proxTiempoLlegada = 10000001;
-            double proxTiempoFin = 10000000;
+            double proxTiempo = 1000000;
+
 
             //fila2.NroFila = fila1.NroFila + 1;
 
@@ -78,37 +75,35 @@ namespace borrador_de_tp4
                 for (int i = 0; i < fila1.Llegada.Count; i++)
                 {
                     
-                    if (proxTiempoLlegada > fila1.Llegada[i].ProximaLlegada)
+                    if (proxTiempo > fila1.Llegada[i].ProximaLlegada)
                     {
-                        
-                        proxTiempoLlegada = fila1.Llegada[i].ProximaLlegada;
-                        tipoEventoLlegada = i;
+                        proxTiempo = fila1.Llegada[i].ProximaLlegada;
+                        tipoEvento = i;
                         proxEvento = fila1.Llegada[i].GetType().Name.ToString() + "[" + tipoEventoLlegada + "]";
+
+                        esLlegada = true;
+                    }
+                    for(int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count)
+                    {
+                        if (fila1.FinesAtencion[i].HoraFinAtencion[j] > 0)
+                        {
+                            if (proxTiempo > fila1.FinesAtencion[i].HoraFinAtencion[j])
+                            {
+                                proxTiempo = fila1.FinesAtencion[i].HoraFinAtencion[j];
+                                tipoEvento = i;
+                                servidorFin = j;
+
+                                esLlegada = false;
+                                MesaggeBox.Show("Fin");
+                            }
+                        }
                     }
                 }
 
-
-                /*for (int i = 0; i < fila1.FinesAtencion.Count; i++)
-                {
-                    
-                    for (int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
-                    {
-
-                        if (proxTiempoFin > fila1.FinesAtencion[i].HoraFinAtencion[j] && fila1.FinesAtencion[i].HoraFinAtencion[j] != 0)
-                        {
-                            
-                            proxTiempoFin = fila1.FinesAtencion[i].HoraFinAtencion[j];
-                            tipoEventoFin = i;
-                            servidor = j;
-                            proxEvento = fila1.FinesAtencion[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
-
-                        }
-                    }
-                }*/
+                
 
 
-                proxTiempo = Math.Min(proxTiempoLlegada, proxTiempoFin);
-                tipoEvento = tipoEventoLlegada;
+
 
 
                 /*
@@ -616,6 +611,7 @@ namespace borrador_de_tp4
             }
 
         }
+        
 
         private void GenerarCorteLuz(Fila fila){
             CorteLuz(fila);
