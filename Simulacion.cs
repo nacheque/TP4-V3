@@ -61,7 +61,8 @@ namespace borrador_de_tp4
             int tipoEvento = 0;
 
 
-            bool esLlegada = true;
+            bool esLlegada = false;
+            bool esCorteLuz = false;
 
             int servidorFin = -1;
             double proxTiempo = 1000000;
@@ -94,12 +95,17 @@ namespace borrador_de_tp4
                                 servidorFin = j;
 
                                 esLlegada = false;
-                                MesaggeBox.Show("Fin");
                             }
                         }
                     }
                 }
 
+                if(proxTiempo > proxCorteLuz)
+                {
+                    proxTiempo = proxCorteLuz;
+                    esCorteLuz = true;
+                    esLlegada = false;
+                }
                 
 
 
@@ -153,7 +159,14 @@ namespace borrador_de_tp4
                 }
                 else
                 {
-                    ComienzoFin(tipoEvento, servidorFin, fila1);
+                    if (esCorteLuz)
+                    {
+                        ComienzoFinCorteLuz(fila1); 
+                    } else
+                    {
+                        ComienzoFin(tipoEvento, servidorFin, fila1);
+                    }
+                    
                 }
 
 
@@ -276,6 +289,8 @@ namespace borrador_de_tp4
                 finAtencionCaja.HoraFinAtencion.Add(0);
                 finAtencionCaja.Cliente.Add(clienteTemporalNulo);
             }
+
+            GenerarCorteLuz(fila);
 
             return fila;
         }
@@ -490,6 +505,11 @@ namespace borrador_de_tp4
         {
             ClienteTemporal clienteTemporal = fila.FinesAtencion[tipoServicio].Cliente[servidor];
 
+            if(clienteTemporal.TomaServicio = false)
+            {
+                ServicioEspecialFin(fila, clienteTemporal);
+            }
+
             fila.FinesAtencion[tipoServicio].HoraFinAtencion[servidor] = 0;
             fila.Estados[tipoServicio][servidor] = "Libre";
 
@@ -511,6 +531,15 @@ namespace borrador_de_tp4
                         return;
                     }
                 }
+            }
+
+            if (clienteTemporal.TomaServicio)
+            {
+                GenerarFinServicioEspecial(fila, clienteTemporal);
+            } else
+            {
+                cantClientesSinServicioAdicional += 1;
+                fila.ClientesTemporales.Remove(clienteTemporal);
             }
 
         }
@@ -577,7 +606,6 @@ namespace borrador_de_tp4
                 }
             }
             //Lo dejo en cero para demostrar que no tiene una atencion
-            
 
             fila.ClientesTemporales.Remove(clienteTemporal);
 
@@ -615,10 +643,42 @@ namespace borrador_de_tp4
 
         private void GenerarCorteLuz(Fila fila){
             CorteLuz(fila);
+
+            if (fila.Estados[3][0] = "Ocupado")
+            {
+                double nuevoTiempo = fila.FinesAtencion[3].HoraFinAtencion[0] + (double)rk.ejecutarRK(0, fila.Reloj);
+                nuevoTiempo = Math.Round(nuevoTiempo, 2);
+                fila.FinesAtencion[3].HoraFinAtencion[0] = nuevoTiempo;
+            }
+
+            if (fila.Estados[3][0] = "Libre")
+            {
+                fila.Estados[3][0] = "Suspendido";
+            }
         }
 
-        private void ComienzoFinCorteLuz(Fila fila){
-            
+        private void ComienzoFinCorteLuz(Fila fila)
+        {
+            if (fila.Estados[3][0] = "Suspendido")
+            {
+                fila.Estados[3][0] = "Libre";
+                if (fila.Colas[3].Clientes.Count != 0)
+                {
+                    foreach(var cliente in fila.ClientesTemporales)
+                    {
+                        if(cliente.Id = fila.Colas[3].Clientes[0])
+                        {
+                            GenerarFin(fila, 3, cliente);
+
+
+                            fila.Colas[tipoServicio].Clientes.RemoveAt(0);
+
+                        }
+                    }
+                }
+            }
+
+            GenerarCorteLuz(Fila fila);
         }
 
     }
