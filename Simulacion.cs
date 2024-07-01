@@ -65,7 +65,7 @@ namespace borrador_de_tp4
             bool esCorteLuz = false;
 
             int servidorFin = -1;
-            double proxTiempo = 1000000;
+            double proxTiempo = 1000000000;
 
 
             //fila2.NroFila = fila1.NroFila + 1;
@@ -75,7 +75,6 @@ namespace borrador_de_tp4
 
                 for (int i = 0; i < fila1.Llegada.Count; i++)
                 {
-                    
                     if (proxTiempo > fila1.Llegada[i].ProximaLlegada)
                     {
                         proxTiempo = fila1.Llegada[i].ProximaLlegada;
@@ -93,6 +92,7 @@ namespace borrador_de_tp4
                                 proxTiempo = fila1.FinesAtencion[i].HoraFinAtencion[j];
                                 tipoEvento = i;
                                 servidorFin = j;
+                                proxEvento = fila1.FinesAtencion[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
 
                                 esLlegada = false;
                             }
@@ -177,6 +177,7 @@ namespace borrador_de_tp4
 
                 Fila fila2 = fila1;
                 fila2.Reloj = proxTiempo;
+                fila2.Evento = proxEvento;
                 FuncionCiclica(cantEventos - 1, fila2, nroFila + 1, nroLinea + 1);
 
             }
@@ -207,6 +208,18 @@ namespace borrador_de_tp4
             Llegada llegadaPrestamos = new Llegada();
             //Llegada llegadaServicioAdicional = new Llegada();
 
+            FinAtencion finAtencionCaja = new FinAtencion();
+            FinAtencion finAtencionPersonalizada = new FinAtencion();
+            FinAtencion finAtencionTarjetaCredito = new FinAtencion();
+            FinAtencion finAtencionPlazoFijo = new FinAtencion();
+            FinAtencion finAtencionPrestamos = new FinAtencion();
+            FinAtencion finAtencionServicioAdicional = new FinAtencion();
+
+
+            List<FinAtencion> finesAtencion = new List<FinAtencion> { finAtencionCaja, finAtencionPersonalizada, finAtencionTarjetaCredito, finAtencionPlazoFijo, finAtencionPrestamos, finAtencionServicioAdicional };
+
+
+
             List<Llegada> llegadas = new List<Llegada> { llegadaCaja, llegadaAtencionPersonalizada, llegadaTarjeta, llegadaPlazoFijo, llegadaPrestamos };
 
             if (fila.Evento == "Inicialización")
@@ -219,6 +232,7 @@ namespace borrador_de_tp4
                     llegadas[i].TiempoEntreLlegada = tiempoEntreLlegada;
                     llegadas[i].ProximaLlegada = tiempoEntreLlegada + fila.Reloj;
                     llegadas[i].Media = this.listaMedias[i];
+                    finesAtencion[i].Media = this.listaMedias[i];
                 }
             }
 
@@ -238,13 +252,7 @@ namespace borrador_de_tp4
 
             List<Cola> colas = new List<Cola> { colaCaja, colaAtencionPersonalizada, colaTarjetaCredito, colaPlazoFijo, colaPrestamos, colaServicioAdicional };
 
-            FinAtencion finAtencionCaja = new FinAtencion();
-            FinAtencion finAtencionPersonalizada = new FinAtencion();
-            FinAtencion finAtencionTarjetaCredito = new FinAtencion();
-            FinAtencion finAtencionPlazoFijo = new FinAtencion();
-            FinAtencion finAtencionPrestamos = new FinAtencion();
-            FinAtencion finAtencionServicioAdicional = new FinAtencion();
-
+            
             ClienteTemporal clienteTemporalNulo = new ClienteTemporal("", 0, 0, 0, false);
 
             finAtencionCaja.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo };
@@ -260,9 +268,7 @@ namespace borrador_de_tp4
             finAtencionPlazoFijo.HoraFinAtencion = new List<double> { 0 };
             finAtencionPrestamos.HoraFinAtencion = new List<double> { 0, 0 };
             finAtencionServicioAdicional.HoraFinAtencion = new List<double> { 0, 0 };
-
-            List<FinAtencion> finesAtencion = new List<FinAtencion> { finAtencionCaja, finAtencionPersonalizada, finAtencionTarjetaCredito, finAtencionPlazoFijo, finAtencionPrestamos, finAtencionServicioAdicional};
-
+            
             List<string> estadoCaja = new List<string> { "Libre", "Libre", "Libre", "Libre" };
             List<string> estadoAtencionPersonalizada = new List<string> { "Libre", "Libre", "Libre" };
             List<string> estadoTarjetaCredito = new List<string> { "Libre", "Libre" };
@@ -336,27 +342,35 @@ namespace borrador_de_tp4
                     grdSimulacion.Rows[ui].Cells["c28"].Value = fila.FinesAtencion[4].ACtiempoAtencion.ToString();
                     grdSimulacion.Rows[ui].Cells["c31"].Value = fila.FinesAtencion[5].ACtiempoAtencion.ToString();
 
+                    //TIEMPO DE ATENCION DE SERVICIO
+                    grdSimulacion.Rows[ui].Cells["c33"].Value = fila.FinesAtencion[0].TiempoAtencion;
+                    grdSimulacion.Rows[ui].Cells["c41"].Value = fila.FinesAtencion[1].TiempoAtencion;
+                    grdSimulacion.Rows[ui].Cells["c47"].Value = fila.FinesAtencion[2].TiempoAtencion;
+                    grdSimulacion.Rows[ui].Cells["c52"].Value = fila.FinesAtencion[3].TiempoAtencion;
+                    grdSimulacion.Rows[ui].Cells["c57"].Value = fila.FinesAtencion[4].TiempoAtencion;
+                    grdSimulacion.Rows[ui].Cells["c61"].Value = fila.FinesAtencion[5].TiempoAtencion;
+
                     //FINES DE ATENCION
-                    //los fines de atenion de las cajas se guardan en las columnas de la 36 a la 40
+                    //los fines de atencion de las cajas se guardan en las columnas de la 36 a la 40
                     grdSimulacion.Rows[ui].Cells["c36"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c37"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c38"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c39"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c40"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
+                    grdSimulacion.Rows[ui].Cells["c37"].Value = fila.FinesAtencion[0].HoraFinAtencion[1];
+                    grdSimulacion.Rows[ui].Cells["c38"].Value = fila.FinesAtencion[0].HoraFinAtencion[2];
+                    grdSimulacion.Rows[ui].Cells["c39"].Value = fila.FinesAtencion[0].HoraFinAtencion[3];
+                    if(caja5)
+                    {
+                        grdSimulacion.Rows[ui].Cells["c40"].Value = fila.FinesAtencion[0].HoraFinAtencion[4];
+                    }
                     //los fines de atencion de la atencion personalizada se guardan en las columnas de la 44 a la 46
-                    grdSimulacion.Rows[ui].Cells["c44"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c46"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
+                    grdSimulacion.Rows[ui].Cells["c44"].Value = fila.FinesAtencion[1].HoraFinAtencion[0];
+                    grdSimulacion.Rows[ui].Cells["c46"].Value = fila.FinesAtencion[1].HoraFinAtencion[1];
                     //los fines de las tarjetas se guardan en las columnas de la 50 a la 51
-                    grdSimulacion.Rows[ui].Cells["c50"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c51"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
+                    grdSimulacion.Rows[ui].Cells["c50"].Value = fila.FinesAtencion[2].HoraFinAtencion[0];
+                    grdSimulacion.Rows[ui].Cells["c51"].Value = fila.FinesAtencion[2].HoraFinAtencion[1];
                     //los fines de atenion de los plazos fijos se guardan en las columnas de la 55 a la 56
-                    grdSimulacion.Rows[ui].Cells["c55"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c56"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    //los fines de atenion de las cajas se guardan en la cloumna 60
-                    grdSimulacion.Rows[ui].Cells["c60"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    //los fines de atenion del servicio adicional se guarda en la cloumna 64 y 65
-                    grdSimulacion.Rows[ui].Cells["c64"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c65"].Value = fila.FinesAtencion[0].HoraFinAtencion[0];
+                    grdSimulacion.Rows[ui].Cells["c55"].Value = fila.FinesAtencion[3].HoraFinAtencion[0];
+                    //los fines de atenion de los prestamos se guardan en la cloumna 60
+                    grdSimulacion.Rows[ui].Cells["c60"].Value = fila.FinesAtencion[4].HoraFinAtencion[0];
+                    grdSimulacion.Rows[ui].Cells["c56"].Value = fila.FinesAtencion[4].HoraFinAtencion[1];
 
 
                     //PORCENTAJE DE TIEMPO DE ESPERA
