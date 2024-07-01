@@ -80,11 +80,11 @@ namespace borrador_de_tp4
                     {
                         proxTiempo = fila1.Llegada[i].ProximaLlegada;
                         tipoEvento = i;
-                        proxEvento = fila1.Llegada[i].GetType().Name.ToString() + "[" + tipoEventoLlegada + "]";
+                        proxEvento = fila1.Llegada[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
 
                         esLlegada = true;
                     }
-                    for(int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count)
+                    for(int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
                     {
                         if (fila1.FinesAtencion[i].HoraFinAtencion[j] > 0)
                         {
@@ -644,14 +644,14 @@ namespace borrador_de_tp4
         private void GenerarCorteLuz(Fila fila){
             CorteLuz(fila);
 
-            if (fila.Estados[3][0] = "Ocupado")
+            if (fila.Estados[3][0] == "Ocupado")
             {
-                double nuevoTiempo = fila.FinesAtencion[3].HoraFinAtencion[0] + (double)rk.ejecutarRK(0, fila.Reloj);
+                double nuevoTiempo = fila.FinesAtencion[3].HoraFinAtencion[0] + (double)rk.ejecutarRK(0, (float)fila.Reloj);
                 nuevoTiempo = Math.Round(nuevoTiempo, 2);
                 fila.FinesAtencion[3].HoraFinAtencion[0] = nuevoTiempo;
             }
 
-            if (fila.Estados[3][0] = "Libre")
+            if (fila.Estados[3][0] == "Libre")
             {
                 fila.Estados[3][0] = "Suspendido";
             }
@@ -659,14 +659,14 @@ namespace borrador_de_tp4
 
         private void ComienzoFinCorteLuz(Fila fila)
         {
-            if (fila.Estados[3][0] = "Suspendido")
+            if (fila.Estados[3][0] == "Suspendido")
             {
                 fila.Estados[3][0] = "Libre";
                 if (fila.Colas[3].Clientes.Count != 0)
                 {
                     foreach(var cliente in fila.ClientesTemporales)
                     {
-                        if(cliente.Id = fila.Colas[3].Clientes[0])
+                        if(cliente.Id == fila.Colas[3].Clientes[0].Id)
                         {
                             GenerarFin(fila, 3, cliente);
 
@@ -678,7 +678,7 @@ namespace borrador_de_tp4
                 }
             }
 
-            GenerarCorteLuz(Fila fila);
+            GenerarCorteLuz(fila);
         }
 
     }
