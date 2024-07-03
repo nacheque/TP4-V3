@@ -342,6 +342,32 @@ namespace borrador_de_tp4
                     grdSimulacion.Rows[ui].Cells["c28"].Value = fila.FinesAtencion[4].ACtiempoAtencion.ToString();
                     grdSimulacion.Rows[ui].Cells["c31"].Value = fila.FinesAtencion[5].ACtiempoAtencion.ToString();
 
+                    //PORCENTAJE DE TIEMPO DE ESPERA EN COLA}
+                    /*
+                    grdSimulacion.Rows[ui].Cells["17"].Value = fila.FinesAtencion[0].ToString();
+                    grdSimulacion.Rows[ui].Cells["20"].Value = fila.FinesAtencion[1].ToString();
+                    grdSimulacion.Rows[ui].Cells["23"].Value = fila.FinesAtencion[2].ToString();
+                    grdSimulacion.Rows[ui].Cells["26"].Value = fila.FinesAtencion[3].ToString();
+                    grdSimulacion.Rows[ui].Cells["29"].Value = fila.FinesAtencion[4].ToString();
+                    grdSimulacion.Rows[ui].Cells["32"].Value = fila.FinesAtencion[5].ToString();
+                    */
+
+                    //ACUMULADR DE TIEMPO DE ATENCION
+                    grdSimulacion.Rows[ui].Cells["c34"].Value = fila.FinesAtencion[0].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c42"].Value = fila.FinesAtencion[1].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c48"].Value = fila.FinesAtencion[2].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c53"].Value = fila.FinesAtencion[3].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c58"].Value = fila.FinesAtencion[4].ACtiempoAtencion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c62"].Value = fila.FinesAtencion[5].ACtiempoAtencion.ToString();
+
+                    //PORCENTAJE DE OCCUPACION
+                    grdSimulacion.Rows[ui].Cells["c35"].Value = fila.FinesAtencion[0].PRCOcupacion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c43"].Value = fila.FinesAtencion[1].PRCOcupacion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c49"].Value = fila.FinesAtencion[2].PRCOcupacion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c54"].Value = fila.FinesAtencion[3].PRCOcupacion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c59"].Value = fila.FinesAtencion[4].PRCOcupacion.ToString();
+                    grdSimulacion.Rows[ui].Cells["c63"].Value = fila.FinesAtencion[5].PRCOcupacion.ToString();
+
                     //TIEMPO DE ATENCION DE SERVICIO
                     grdSimulacion.Rows[ui].Cells["c33"].Value = fila.FinesAtencion[0].TiempoAtencion;
                     grdSimulacion.Rows[ui].Cells["c41"].Value = fila.FinesAtencion[1].TiempoAtencion;
