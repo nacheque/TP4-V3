@@ -226,7 +226,7 @@ namespace borrador_de_tp4
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    Random rnd = new Random();
+                    Random rnd = new Random(Guid.NewGuid().GetHashCode());
                     double tiempoEntreLlegada = -(listaMedias[i]) * Math.Log(1 - (double)rnd.NextDouble());
                     tiempoEntreLlegada = Math.Round(tiempoEntreLlegada, 2);
                     llegadas[i].TiempoEntreLlegada = tiempoEntreLlegada;
@@ -440,10 +440,10 @@ namespace borrador_de_tp4
         {
             cantClientesTotal += 1;
 
-            Random random = new Random();
+            Random randomLlegada = new Random(Guid.NewGuid().GetHashCode());
 
             // Generar un número decimal aleatorio entre 0.01 y 0.99
-            double numeroDecimalAleatorio = random.NextDouble();
+            double numeroDecimalAleatorio = randomLlegada.NextDouble();
 
             // Redondear a dos decimales
             numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
@@ -455,7 +455,7 @@ namespace borrador_de_tp4
         private void ComienzoLlegada(Fila fila, int tipoServicio)
         {
             
-            Random random = new Random();
+            Random random = new Random(Guid.NewGuid().GetHashCode());
             ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", 0, random.Next(1, 10000), tipoServicio, false);
 
             fila.ClientesTemporales.Add(clienteTemporal);
@@ -470,7 +470,7 @@ namespace borrador_de_tp4
 
         private void ServicioEspecialLlegada(Fila fila, ClienteTemporal clienteTemporal){
             
-            Random random = new Random();
+            Random random = new Random(Guid.NewGuid().GetHashCode());
             double numeroDecimalAleatorio = random.NextDouble();
 
             // Redondear a dos decimales
@@ -518,7 +518,7 @@ namespace borrador_de_tp4
                     fila.ClientesTemporales[index].Estado = clienteTemporal.Estado;
                     fila.ClientesTemporales[index].InicioAtencion = clienteTemporal.InicioAtencion;
 
-                    Random random = new Random();
+                    Random random = new Random(Guid.NewGuid().GetHashCode());
 
                     double numeroDecimalAleatorio = random.NextDouble();
 
@@ -600,7 +600,7 @@ namespace borrador_de_tp4
                     fila.ClientesTemporales[index].Estado = clienteTemporal.Estado;
                     fila.ClientesTemporales[index].InicioAtencion = clienteTemporal.InicioAtencion;
 
-                    Random random = new Random();
+                    Random random = new Random(Guid.NewGuid().GetHashCode());
 
                     double numeroDecimalAleatorio = random.NextDouble();
 
@@ -660,7 +660,7 @@ namespace borrador_de_tp4
 
         //Iniciarlo desde el principio
         private void CorteLuz(Fila fila){
-            Random random = new Random();
+            Random random = new Random(Guid.NewGuid().GetHashCode());
 
             int t = 2;
 
