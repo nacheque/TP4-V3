@@ -44,18 +44,19 @@
             this.t,
             this.c,
             this.segundos});
-            this.dataGridView1.Location = new System.Drawing.Point(8, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 10);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(628, 426);
+            this.dataGridView1.Size = new System.Drawing.Size(471, 346);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Tag = "";
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // tInicial
             // 
-            this.tInicial.HeaderText = "t0";
+            this.tInicial.HeaderText = "FILA";
             this.tInicial.MinimumWidth = 6;
             this.tInicial.Name = "tInicial";
             this.tInicial.Width = 125;
@@ -83,10 +84,11 @@
             // 
             // ResultadosRK
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 450);
+            this.ClientSize = new System.Drawing.Size(483, 366);
             this.Controls.Add(this.dataGridView1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ResultadosRK";
             this.Text = "ResultadosRK";
             this.Load += new System.EventHandler(this.ResultadosRK_Load);

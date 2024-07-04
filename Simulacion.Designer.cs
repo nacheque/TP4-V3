@@ -104,11 +104,11 @@
             this.c53 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c54 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c55 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.c56 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c58 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c59 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c60 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.c56 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c61 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c62 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c63 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -129,6 +129,7 @@
             this.c78 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c79 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c80 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdSimulacion)).BeginInit();
             this.SuspendLayout();
             // 
@@ -197,11 +198,11 @@
             this.c53,
             this.c54,
             this.c55,
-            this.c56,
             this.c57,
             this.c58,
             this.c59,
             this.c60,
+            this.c56,
             this.c61,
             this.c62,
             this.c63,
@@ -717,15 +718,9 @@
             // 
             // c55
             // 
-            this.c55.HeaderText = "Fin de Atención Pl. Fijos 1";
+            this.c55.HeaderText = "Fin de Atención Pl. Fijos";
             this.c55.Name = "c55";
             this.c55.Width = 70;
-            // 
-            // c56
-            // 
-            this.c56.HeaderText = "Fin de Atención Pl. Fijos 2";
-            this.c56.Name = "c56";
-            this.c56.Width = 70;
             // 
             // c57
             // 
@@ -747,9 +742,15 @@
             // 
             // c60
             // 
-            this.c60.HeaderText = "Fin de atención Prestamos";
+            this.c60.HeaderText = "Fin de Atención Prestamos 1";
             this.c60.Name = "c60";
             this.c60.Width = 70;
+            // 
+            // c56
+            // 
+            this.c56.HeaderText = "Fin de Atención Prestamos 2";
+            this.c56.Name = "c56";
+            this.c56.Width = 70;
             // 
             // c61
             // 
@@ -871,12 +872,23 @@
             this.c80.Name = "c80";
             this.c80.Width = 50;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(673, 131);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(173, 42);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "MOSTRAR RK";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Simulacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1058, 740);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -980,11 +992,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn c53;
         private System.Windows.Forms.DataGridViewTextBoxColumn c54;
         private System.Windows.Forms.DataGridViewTextBoxColumn c55;
-        private System.Windows.Forms.DataGridViewTextBoxColumn c56;
         private System.Windows.Forms.DataGridViewTextBoxColumn c57;
         private System.Windows.Forms.DataGridViewTextBoxColumn c58;
         private System.Windows.Forms.DataGridViewTextBoxColumn c59;
         private System.Windows.Forms.DataGridViewTextBoxColumn c60;
+        private System.Windows.Forms.DataGridViewTextBoxColumn c56;
         private System.Windows.Forms.DataGridViewTextBoxColumn c61;
         private System.Windows.Forms.DataGridViewTextBoxColumn c62;
         private System.Windows.Forms.DataGridViewTextBoxColumn c63;
@@ -1005,5 +1017,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn c78;
         private System.Windows.Forms.DataGridViewTextBoxColumn c79;
         private System.Windows.Forms.DataGridViewTextBoxColumn c80;
+        private System.Windows.Forms.Button button1;
     }
 }
