@@ -51,12 +51,13 @@ namespace borrador_de_tp4
             set { tomaServicio = value;}
         }
 
-        public ClienteTemporal(String estado, double inicioAtencion, int id, int tipoServicio, bool tomaServicio){
+        public ClienteTemporal(String estado, double inicioAtencion, int id, int tipoServicio, bool tomaServicio, int nroFilaCliente){
             this.estado = estado;
             this.inicioAtencion = inicioAtencion;
             this.id = id;
             this.tipoServicio = tipoServicio;
             this.tomaServicio = tomaServicio;
+            this.nroFilaCliente = nroFilaCliente;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,8 +20,9 @@ namespace borrador_de_tp4
         private int filaDesde;
         private List<int> listaMedias; //hay 11 medias que tienen correspondencia directa a la asignacion en el incio
         private bool caja5;
-        private int cantClientesTotal;
-        private int cantClientesSinServicioAdicional;
+        private int cantClientesTotal = 0;
+        private int cantClientesSinServicioAdicional = 0;
+        private int cantCortesDeLuz = 0;
         private double proxCorteLuz = 0;
         private int tipoServicio;
 
@@ -56,13 +58,14 @@ namespace borrador_de_tp4
 
         public void FuncionCiclica(int cantEventos, Fila fila1, int nroFila, int  nroLinea)
         {
-            grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = fila1.NroFila;
+            grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = nroFila;
             string proxEvento = "";
             int tipoEvento = 0;
 
 
             bool esLlegada = false;
             bool esCorteLuz = false;
+            bool esServicioAdicional = false;
 
             int servidorFin = -1;
             double proxTiempo = 1000000000;
@@ -82,6 +85,7 @@ namespace borrador_de_tp4
                         proxEvento = fila1.Llegada[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
 
                         esLlegada = true;
+                        esServicioAdicional = false;
                     }
                     for(int j = 0; j < fila1.FinesAtencion[i].HoraFinAtencion.Count; j++)
                     {
@@ -95,6 +99,12 @@ namespace borrador_de_tp4
                                 proxEvento = fila1.FinesAtencion[i].GetType().Name.ToString() + "[" + tipoEvento + "]";
 
                                 esLlegada = false;
+                                esServicioAdicional = false;
+                                if(tipoEvento == 5)
+                                {
+                                    esServicioAdicional = true;
+                                    proxEvento = "Servicio Adicional";
+                                }
                             }
                         }
                     }
@@ -103,36 +113,23 @@ namespace borrador_de_tp4
                 if(proxTiempo > proxCorteLuz)
                 {
                     proxTiempo = proxCorteLuz;
+                    proxEvento = "Corte de luz";
                     esCorteLuz = true;
                     esLlegada = false;
+                    esServicioAdicional = false;
                 }
-                
 
 
-
-
-
-                /*
-                if(proxTiempoLlegada < proxTiempoFin)
+                if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 300))
                 {
-                    proxTiempo = proxTiempoLlegada;
-                    tipoEvento = tipoEventoLlegada;
-                } else
-                {
-                    esLlegada = false;
-                    proxTiempo = proxTiempoFin;
-                    tipoEvento = tipoEventoFin;
-                    servidorFin = servidor;
-                }*/
+                    LlenarTabla(fila1, fila1.Evento, fila1.Reloj);
+                }
 
                 fila1.Reloj = proxTiempo;
 
                 //Fila fila2 = new Fila();
                 if (esLlegada)
                 {
-                    ComienzoLlegada(fila1, tipoEvento);
-
-
                     //falta agregar alguna forma de verificar que las columnas se agreguen solo cuando llegue un cliente
                     int ultimaFila = fila1.NroFila;
                     string estadoCliente = "estadoCliente" + ultimaFila;
@@ -156,6 +153,8 @@ namespace borrador_de_tp4
 
                     }
 
+                    ComienzoLlegada(fila1, tipoEvento);
+
                 }
                 else
                 {
@@ -164,16 +163,18 @@ namespace borrador_de_tp4
                         ComienzoFinCorteLuz(fila1); 
                     } else
                     {
-                        ComienzoFin(tipoEvento, servidorFin, fila1);
+                        if(esServicioAdicional)
+                        {
+                            ComienzaFinServicioEspecial(servidorFin, fila1);
+                        } else 
+                        {
+                            ComienzoFin(tipoEvento, servidorFin, fila1);
+                        }
+                        
                     }
                     
                 }
 
-
-                if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 10))
-                {
-                    LlenarTabla(fila1, proxEvento, proxTiempo);
-                }
 
                 Fila fila2 = fila1;
                 fila2.Reloj = proxTiempo;
@@ -181,14 +182,6 @@ namespace borrador_de_tp4
                 FuncionCiclica(cantEventos - 1, fila2, nroFila + 1, nroLinea + 1);
 
             }
-            //fila2.Reloj = fila2.Reloj + proxTiempo;
-
-                
-                
-
-
-                
-
 
         }
         
@@ -253,7 +246,7 @@ namespace borrador_de_tp4
             List<Cola> colas = new List<Cola> { colaCaja, colaAtencionPersonalizada, colaTarjetaCredito, colaPlazoFijo, colaPrestamos, colaServicioAdicional };
 
             
-            ClienteTemporal clienteTemporalNulo = new ClienteTemporal("", 0, 0, 0, false);
+            ClienteTemporal clienteTemporalNulo = new ClienteTemporal("", 0, 0, 0, false, 0);
 
             finAtencionCaja.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo };
             finAtencionPersonalizada.Cliente = new List<ClienteTemporal> { clienteTemporalNulo, clienteTemporalNulo, clienteTemporalNulo };
@@ -416,7 +409,7 @@ namespace borrador_de_tp4
                     grdSimulacion.Rows[ui].Cells["c67"].Value = fila.Estados[0][1];
                     grdSimulacion.Rows[ui].Cells["c68"].Value = fila.Estados[0][2];
                     grdSimulacion.Rows[ui].Cells["c69"].Value = fila.Estados[0][3];
-                    if (fila.Estados[0].Count == 5)
+                    if (this.caja5)
                     {
                         grdSimulacion.Rows[0].Cells["c70"].Value = fila.Estados[0][4];
                     }
@@ -430,6 +423,13 @@ namespace borrador_de_tp4
                     grdSimulacion.Rows[ui].Cells["c78"].Value = fila.Estados[4][1];
                     grdSimulacion.Rows[ui].Cells["c79"].Value = fila.Estados[5][0];
                     grdSimulacion.Rows[ui].Cells["c80"].Value = fila.Estados[5][1];
+
+                    //CORTE DE LUZ Y ESTADISTICOS
+                    grdSimulacion.Rows[ui].Cells["proxCL"].Value = this.proxCorteLuz;
+                    grdSimulacion.Rows[ui].Cells["cantCTotal"].Value = this.cantClientesTotal;
+                    grdSimulacion.Rows[ui].Cells["cantCSinSA"].Value = this.cantClientesSinServicioAdicional;
+                    grdSimulacion.Rows[ui].Cells["cantCorteLuz"].Value = this.cantCortesDeLuz;
+
                     break;
                 }
             }
@@ -438,17 +438,14 @@ namespace borrador_de_tp4
 
         private void GenerarProximaLlegada(Fila fila, int tipoServicio)
         {
-            cantClientesTotal += 1;
 
             Random randomLlegada = new Random(Guid.NewGuid().GetHashCode());
 
             // Generar un número decimal aleatorio entre 0.01 y 0.99
             double numeroDecimalAleatorio = randomLlegada.NextDouble();
 
-            // Redondear a dos decimales
-            numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
-
             fila.Llegada[tipoServicio].TiempoEntreLlegada = -fila.Llegada[tipoServicio].Media * Math.Log(1 - numeroDecimalAleatorio);
+            fila.Llegada[tipoServicio].TiempoEntreLlegada = Math.Round(fila.Llegada[tipoServicio].TiempoEntreLlegada, 2);
             fila.Llegada[tipoServicio].ProximaLlegada = fila.Reloj + fila.Llegada[tipoServicio].TiempoEntreLlegada;
         }
 
@@ -456,7 +453,11 @@ namespace borrador_de_tp4
         {
             
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", 0, random.Next(1, 10000), tipoServicio, false);
+            ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", 0, random.Next(1, 10000), tipoServicio, false, 0);
+            clienteTemporal.NroFilaCliente = fila.NroFila;
+            grdSimulacion.Rows[fila.NroFila].Cells["estadoCliente" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.Estado;
+            grdSimulacion.Rows[fila.NroFila].Cells["tomaServicio" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.TomaServicio;
+
 
             fila.ClientesTemporales.Add(clienteTemporal);
             //this.tipoServicio = tipoServicio;
@@ -466,6 +467,8 @@ namespace borrador_de_tp4
             GenerarProximaLlegada(fila, tipoServicio);
 
             GenerarFin(fila, tipoServicio, clienteTemporal);
+
+            
         }
 
         private void ServicioEspecialLlegada(Fila fila, ClienteTemporal clienteTemporal){
@@ -483,7 +486,7 @@ namespace borrador_de_tp4
                 clienteTemporal.TomaServicio = false;
             }
             grdSimulacion.Rows[fila.NroFila].Cells["c13"].Value = clienteTemporal.TomaServicio;
-            clienteTemporal.NroFilaCliente = fila.NroFila;
+            
         }
 
         private void ServicioEspecialFin(Fila fila, ClienteTemporal clienteTemporal){
@@ -499,6 +502,7 @@ namespace borrador_de_tp4
             } else {
                 clienteTemporal.TomaServicio = false;
             }
+
         }
 
         private void GenerarFin(Fila fila, int tipoServicio, ClienteTemporal clienteTemporal)
@@ -522,20 +526,15 @@ namespace borrador_de_tp4
 
                     double numeroDecimalAleatorio = random.NextDouble();
 
-                    numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
-
                     fila.FinesAtencion[tipoServicio].TiempoAtencion = -fila.FinesAtencion[tipoServicio].Media * Math.Log(1 - numeroDecimalAleatorio);
+                    fila.FinesAtencion[tipoServicio].TiempoAtencion = Math.Round(fila.FinesAtencion[tipoServicio].TiempoAtencion, 2);
                     fila.FinesAtencion[tipoServicio].HoraFinAtencion[i] = fila.Reloj + fila.FinesAtencion[tipoServicio].TiempoAtencion;
                     fila.FinesAtencion[tipoServicio].ACtiempoAtencion += fila.FinesAtencion[tipoServicio].TiempoAtencion;
                     fila.FinesAtencion[tipoServicio].PRCOcupacion = (fila.FinesAtencion[tipoServicio].ACtiempoAtencion / fila.Reloj) * 100;
 
-                    //los fines de atenion se guardan en las columnas de la 36 a la 40
-                    /*
-                    for (int i = 0; i < fila.FinesAtencion[tipoServicio].Count; i++)
-                    {
-                        
-                    }
-                    */
+                    grdSimulacion.Rows[fila.NroFila].Cells["estadoCliente" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.Estado;
+                    grdSimulacion.Rows[fila.NroFila].Cells["tomaServicio" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.TomaServicio;
+
                     return;
                 }
             }
@@ -549,6 +548,8 @@ namespace borrador_de_tp4
             {
                 ServicioEspecialFin(fila, clienteTemporal);
             }
+
+            grdSimulacion.Rows[fila.NroFila].Cells["c14"].Value = clienteTemporal.TomaServicio;
 
             fila.FinesAtencion[tipoServicio].HoraFinAtencion[servidor] = 0;
             fila.Estados[tipoServicio][servidor] = "Libre";
@@ -578,6 +579,7 @@ namespace borrador_de_tp4
                 GenerarFinServicioEspecial(fila, clienteTemporal);
             } else
             {
+                cantClientesTotal += 1;
                 cantClientesSinServicioAdicional += 1;
                 fila.ClientesTemporales.Remove(clienteTemporal);
             }
@@ -611,6 +613,10 @@ namespace borrador_de_tp4
                     fila.FinesAtencion[5].ACtiempoAtencion += fila.FinesAtencion[5].TiempoAtencion;
                     fila.FinesAtencion[5].PRCOcupacion = (fila.FinesAtencion[5].ACtiempoAtencion / fila.Reloj) * 100;
 
+                    grdSimulacion.Rows[fila.NroFila].Cells["estadoCliente" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.Estado;
+                    grdSimulacion.Rows[fila.NroFila].Cells["tomaServicio" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.TomaServicio;
+
+
                     return;
                 }
             }
@@ -621,6 +627,8 @@ namespace borrador_de_tp4
         private void ComienzaFinServicioEspecial(int servidor, Fila fila)
         {
             ClienteTemporal clienteTemporal = fila.FinesAtencion[5].Cliente[servidor];
+            
+            cantClientesTotal += 1;
 
             if (fila.Colas[5].Clientes.Count != 0)
             {
@@ -678,6 +686,8 @@ namespace borrador_de_tp4
                 proxCorteLuz += fila.Reloj + 8 * t;
             }
 
+            
+
         }
         
 
@@ -717,6 +727,8 @@ namespace borrador_de_tp4
                     }
                 }
             }
+
+            this.cantCortesDeLuz += 1;
 
             GenerarCorteLuz(fila);
         }

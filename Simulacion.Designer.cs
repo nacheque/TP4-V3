@@ -59,6 +59,7 @@
             this.c12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.proxCL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -80,6 +81,9 @@
             this.c33 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c35 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantCTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantCSinSA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantCorteLuz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c37 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -148,6 +152,7 @@
             this.c12,
             this.c13,
             this.c14,
+            this.proxCL,
             this.c15,
             this.c16,
             this.c17,
@@ -169,6 +174,9 @@
             this.c33,
             this.c34,
             this.c35,
+            this.cantCTotal,
+            this.cantCSinSA,
+            this.cantCorteLuz,
             this.c36,
             this.c37,
             this.c38,
@@ -216,7 +224,7 @@
             this.c80});
             this.grdSimulacion.Location = new System.Drawing.Point(27, 225);
             this.grdSimulacion.Name = "grdSimulacion";
-            this.grdSimulacion.Size = new System.Drawing.Size(5916, 312);
+            this.grdSimulacion.Size = new System.Drawing.Size(5916, 495);
             this.grdSimulacion.TabIndex = 0;
             // 
             // label1
@@ -444,6 +452,11 @@
             this.c14.Name = "c14";
             this.c14.Width = 70;
             // 
+            // proxCL
+            // 
+            this.proxCL.HeaderText = "Proximo Corte de Luz";
+            this.proxCL.Name = "proxCL";
+            // 
             // c15
             // 
             this.c15.HeaderText = "Cola para Cajas";
@@ -569,6 +582,21 @@
             this.c35.HeaderText = "Porcentaje de Ocupación de Cajas";
             this.c35.Name = "c35";
             this.c35.Width = 70;
+            // 
+            // cantCTotal
+            // 
+            this.cantCTotal.HeaderText = "Cantidad de Clientes Total";
+            this.cantCTotal.Name = "cantCTotal";
+            // 
+            // cantCSinSA
+            // 
+            this.cantCSinSA.HeaderText = "Cantidad de Clientes Sin Servicio Adicional";
+            this.cantCSinSA.Name = "cantCSinSA";
+            // 
+            // cantCorteLuz
+            // 
+            this.cantCorteLuz.HeaderText = "Cantidad de Cortes de Luz";
+            this.cantCorteLuz.Name = "cantCorteLuz";
             // 
             // c36
             // 
@@ -848,7 +876,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1058, 540);
+            this.ClientSize = new System.Drawing.Size(1058, 740);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -907,6 +935,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn c12;
         private System.Windows.Forms.DataGridViewTextBoxColumn c13;
         private System.Windows.Forms.DataGridViewTextBoxColumn c14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn proxCL;
         private System.Windows.Forms.DataGridViewTextBoxColumn c15;
         private System.Windows.Forms.DataGridViewTextBoxColumn c16;
         private System.Windows.Forms.DataGridViewTextBoxColumn c17;
@@ -928,6 +957,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn c33;
         private System.Windows.Forms.DataGridViewTextBoxColumn c34;
         private System.Windows.Forms.DataGridViewTextBoxColumn c35;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantCTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantCSinSA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantCorteLuz;
         private System.Windows.Forms.DataGridViewTextBoxColumn c36;
         private System.Windows.Forms.DataGridViewTextBoxColumn c37;
         private System.Windows.Forms.DataGridViewTextBoxColumn c38;
