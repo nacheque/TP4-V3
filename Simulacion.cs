@@ -26,6 +26,10 @@ namespace borrador_de_tp4
         private double proxCorteLuz = 0;
         private int tipoServicio;
 
+        private int nroFilaCliente;
+        private bool tomaServicioCliente;
+        private string estadoCliente;
+
         private RK rk;
 
         public Simulacion(int n, int filaDesde, List<int> listaMedias, bool caja5)
@@ -58,7 +62,7 @@ namespace borrador_de_tp4
 
         public void FuncionCiclica(int cantEventos, Fila fila1, int nroFila, int  nroLinea)
         {
-            grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = nroFila;
+            
             string proxEvento = "";
             int tipoEvento = 0;
 
@@ -123,6 +127,13 @@ namespace borrador_de_tp4
                 if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 300))
                 {
                     LlenarTabla(fila1, fila1.Evento, fila1.Reloj);
+                    grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = nroFila;
+                    if (grdSimulacion.Columns.Contains("estadoCliente" + this.nroFilaCliente))
+                    {
+                        grdSimulacion.Rows[fila1.NroFila].Cells["estadoCliente" + this.nroFilaCliente].Value = this.estadoCliente;
+                        grdSimulacion.Rows[fila1.NroFila].Cells["tomaServicio" + this.nroFilaCliente].Value = this.tomaServicioCliente;
+
+                    }
                 }
 
                 fila1.Reloj = proxTiempo;
@@ -455,9 +466,10 @@ namespace borrador_de_tp4
             Random random = new Random(Guid.NewGuid().GetHashCode());
             ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", 0, random.Next(1, 10000), tipoServicio, false, 0);
             clienteTemporal.NroFilaCliente = fila.NroFila;
-            grdSimulacion.Rows[fila.NroFila].Cells["estadoCliente" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.Estado;
-            grdSimulacion.Rows[fila.NroFila].Cells["tomaServicio" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.TomaServicio;
 
+            this.nroFilaCliente = clienteTemporal.NroFilaCliente;
+            this.estadoCliente = clienteTemporal.Estado;
+            this.tomaServicioCliente = clienteTemporal.TomaServicio;
 
             fila.ClientesTemporales.Add(clienteTemporal);
             //this.tipoServicio = tipoServicio;
@@ -530,10 +542,12 @@ namespace borrador_de_tp4
                     fila.FinesAtencion[tipoServicio].TiempoAtencion = Math.Round(fila.FinesAtencion[tipoServicio].TiempoAtencion, 2);
                     fila.FinesAtencion[tipoServicio].HoraFinAtencion[i] = fila.Reloj + fila.FinesAtencion[tipoServicio].TiempoAtencion;
                     fila.FinesAtencion[tipoServicio].ACtiempoAtencion += fila.FinesAtencion[tipoServicio].TiempoAtencion;
+                    //esto deberia ser tiempo de servicio / actiempo atencion
                     fila.FinesAtencion[tipoServicio].PRCOcupacion = (fila.FinesAtencion[tipoServicio].ACtiempoAtencion / fila.Reloj) * 100;
 
-                    grdSimulacion.Rows[fila.NroFila].Cells["estadoCliente" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.Estado;
-                    grdSimulacion.Rows[fila.NroFila].Cells["tomaServicio" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.TomaServicio;
+                    this.nroFilaCliente = clienteTemporal.NroFilaCliente;
+                    this.estadoCliente = clienteTemporal.Estado;
+                    this.tomaServicioCliente = clienteTemporal.TomaServicio;
 
                     return;
                 }
@@ -613,8 +627,9 @@ namespace borrador_de_tp4
                     fila.FinesAtencion[5].ACtiempoAtencion += fila.FinesAtencion[5].TiempoAtencion;
                     fila.FinesAtencion[5].PRCOcupacion = (fila.FinesAtencion[5].ACtiempoAtencion / fila.Reloj) * 100;
 
-                    grdSimulacion.Rows[fila.NroFila].Cells["estadoCliente" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.Estado;
-                    grdSimulacion.Rows[fila.NroFila].Cells["tomaServicio" + clienteTemporal.NroFilaCliente].Value = clienteTemporal.TomaServicio;
+                    this.nroFilaCliente = clienteTemporal.NroFilaCliente;
+                    this.estadoCliente = clienteTemporal.Estado;
+                    this.tomaServicioCliente = clienteTemporal.TomaServicio;
 
 
                     return;
