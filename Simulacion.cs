@@ -134,6 +134,7 @@ namespace borrador_de_tp4
                     proxTiempo = proxFinCorteLuz;
                     proxEvento = "Fin Corte de Luz";
                     esFinCorteLuz = true;
+                    esCorteLuz = false;
                     esLlegada = false;
                     esServicioAdicional = false;
                 }
@@ -187,19 +188,22 @@ namespace borrador_de_tp4
                         ComienzoCorteLuz(fila1); 
                     } else
                     {
-                        if(esServicioAdicional)
+                        if (esFinCorteLuz)
                         {
-                            ComienzaFinServicioEspecial(servidorFin, fila1);
-                        } else 
+                            ComienzoFinCorteLuz(fila1);
+                        } else
                         {
-                            if(esFinCorteLuz)
+                            if (esServicioAdicional)
                             {
-                                ComienzoFinCorteLuz(fila1);
-                            } else 
+                                ComienzaFinServicioEspecial(servidorFin, fila1);
+                            }
+                            else
                             {
                                 ComienzoFin(tipoEvento, servidorFin, fila1);
+                                
                             }
                         }
+                        
                         
                     }
                     
@@ -811,6 +815,7 @@ namespace borrador_de_tp4
                     }
                 }
             }
+            proxFinCorteLuz = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
