@@ -533,7 +533,7 @@ namespace borrador_de_tp4
         {
             
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", 0, random.Next(1, 10000), tipoServicio, false, 0);
+            ClienteTemporal clienteTemporal = new ClienteTemporal("En espera", fila.Reloj, random.Next(1, 10000), tipoServicio, false, 0);
             clienteTemporal.NroFilaCliente = fila.NroFila;
 
             
@@ -597,7 +597,7 @@ namespace borrador_de_tp4
                     fila.Estados[tipoServicio][i] = "Ocupado";
 
                     clienteTemporal.Estado = "Siendo Atendido";
-                    clienteTemporal.InicioAtencion = fila.Reloj;
+                    //clienteTemporal.InicioAtencion = fila.Reloj;
 
                     fila.FinesAtencion[tipoServicio].Cliente[i] = clienteTemporal;
                     int index = fila.ClientesTemporales.IndexOf(clienteTemporal);
@@ -647,7 +647,7 @@ namespace borrador_de_tp4
                 foreach (var cliente in fila.ClientesTemporales) {
                     if (cliente.Id == fila.Colas[tipoServicio].Clientes[0].Id) {
                         cliente.Estado = "Siendo Atendido";
-                        cliente.InicioAtencion = fila.Reloj;
+                        //cliente.InicioAtencion = fila.Reloj;
 
                         //Es el mismo cliente que encontramos en el condicional
                         ClienteTemporal clienteCola = fila.Colas[tipoServicio].Clientes[0];
@@ -684,7 +684,7 @@ namespace borrador_de_tp4
                 {
                     fila.Estados[5][i] = "Ocupado";
                     clienteTemporal.Estado = "Siendo Atendido";
-                    clienteTemporal.InicioAtencion = fila.Reloj;
+                    //clienteTemporal.InicioAtencion = fila.Reloj;
 
                     fila.FinesAtencion[5].Cliente[i] = clienteTemporal;
 
@@ -731,7 +731,7 @@ namespace borrador_de_tp4
                     if (cliente.Id == fila.Colas[5].Clientes[0].Id)
                     {
                         cliente.Estado = "Siendo Atendido";
-                        cliente.InicioAtencion = fila.Reloj;
+                        //cliente.InicioAtencion = fila.Reloj;
 
                         //Es el mismo cliente que encontramos en el condicional
                         ClienteTemporal clienteCola = fila.Colas[5].Clientes[0];
