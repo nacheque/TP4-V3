@@ -59,6 +59,8 @@ namespace borrador_de_tp4
                }
                 
                Fila fila = GenerarFila(0);
+
+               LlenarTabla(fila, fila.Evento, fila.Reloj);
           //La funcion ciclica debe empezar desde cero, no desde this.filaDesde
           //la fila desde donde comienza a llenar la tabla debe ser el valor que se ingresa
                FuncionCiclica(this.cantidadFilas, fila, this.filaDesde, 0, 0); 
@@ -151,8 +153,8 @@ namespace borrador_de_tp4
                 */                
 
                 fila1.Reloj = proxTiempo;
+                fila1.Evento = proxEvento;
 
-                //Fila fila2 = new Fila();
                 if (esLlegada)
                 {
                     //falta agregar alguna forma de verificar que las columnas se agreguen solo cuando llegue un cliente
@@ -209,9 +211,11 @@ namespace borrador_de_tp4
                     
                 }
 
+                fila1.Reloj = proxTiempo;
+
                 //numeroDeFila = numero de fila actual
                 //nroFila = numero de fila desde
-                
+
                 if (nroFila <= nroLinea && (nroFila + 300) >= nroLinea )
                 {
                     if (contaRows < 300)
