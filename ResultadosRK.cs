@@ -23,7 +23,11 @@ namespace borrador_de_tp4
         {
             foreach (var resultado in rk.Resultados)
             {
-                dataGridView1.Rows.Add(resultado.Fila, resultado.X, resultado.Y, resultado.Tiempo);
+                dataGridView1.Rows.Add(resultado.Fila, resultado.X, resultado.Y, resultado.Tiempo, "");
+            }
+            foreach (var fila in rk.TablaRK)
+            {
+                dataGridView1.Rows.Add(fila.x, fila.y, fila.k1, fila.k2, fila.k3, fila.k4, fila.sigY);
             }
         }
 
