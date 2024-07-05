@@ -35,7 +35,7 @@ namespace borrador_de_tp4
         private bool tomaServicioCliente;
         private string estadoCliente;
 
-        private int numeroFilaRK = 1;
+        private int numeroFilaRK = 0;
 
         private RK rk = new RK();
 
@@ -66,9 +66,9 @@ namespace borrador_de_tp4
                 
                Fila fila = GenerarFila(0);
 
-               LlenarTabla(fila, fila.Evento, fila.Reloj);
-          //La funcion ciclica debe empezar desde cero, no desde this.filaDesde
-          //la fila desde donde comienza a llenar la tabla debe ser el valor que se ingresa
+               //LlenarTabla(fila, fila.Evento, fila.Reloj);
+                //La funcion ciclica debe empezar desde cero, no desde this.filaDesde
+                 //la fila desde donde comienza a llenar la tabla debe ser el valor que se ingresa
                FuncionCiclica(this.cantidadFilas, fila, this.filaDesde, 0, 0); 
         }
 
@@ -77,7 +77,7 @@ namespace borrador_de_tp4
             
             string proxEvento = "";
             int tipoEvento = 0;
-            numeroFilaRK = nroLinea;
+            numeroFilaRK = nroLinea + 1;
 
 
             bool esLlegada = false;
