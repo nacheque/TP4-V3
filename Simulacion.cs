@@ -19,6 +19,10 @@ namespace borrador_de_tp4
         private int cantidadFilas;
         private int filaDesde;
         private List<int> listaMedias; //hay 11 medias que tienen correspondencia directa a la asignacion en el incio
+
+        private double prcSALlegan;
+        private double prcSASalen;
+        
         private bool caja5;
         private int cantClientesTotal = 0;
         private int cantClientesSinServicioAdicional = 0;
@@ -35,13 +39,15 @@ namespace borrador_de_tp4
 
         private RK rk = new RK();
 
-        public Simulacion(int n, int filaDesde, List<int> listaMedias, bool caja5)
+        public Simulacion(int n, int filaDesde, List<int> listaMedias, bool caja5, double prcSALlegan, double prcSASalen)
         {
             InitializeComponent();
             this.cantidadFilas = n;
             this.filaDesde = filaDesde;
             this.listaMedias = listaMedias;
             this.caja5 = caja5;
+            this.prcSALlegan = prcSALlegan;
+            this.prcSASalen = prcSASalen;
 
             //generar fila 0
 
@@ -452,7 +458,8 @@ namespace borrador_de_tp4
                     }
                     //los fines de atencion de la atencion personalizada se guardan en las columnas de la 44 a la 46
                     grdSimulacion.Rows[ui].Cells["c44"].Value = fila.FinesAtencion[1].HoraFinAtencion[0];
-                    grdSimulacion.Rows[ui].Cells["c46"].Value = fila.FinesAtencion[1].HoraFinAtencion[1];
+                    grdSimulacion.Rows[ui].Cells["c45"].Value = fila.FinesAtencion[1].HoraFinAtencion[1];
+                    grdSimulacion.Rows[ui].Cells["c46"].Value = fila.FinesAtencion[1].HoraFinAtencion[2];
                     //los fines de las tarjetas se guardan en las columnas de la 50 a la 51
                     grdSimulacion.Rows[ui].Cells["c50"].Value = fila.FinesAtencion[2].HoraFinAtencion[0];
                     grdSimulacion.Rows[ui].Cells["c51"].Value = fila.FinesAtencion[2].HoraFinAtencion[1];
@@ -554,7 +561,7 @@ namespace borrador_de_tp4
             // Redondear a dos decimales
             numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
 
-            if(numeroDecimalAleatorio < 0.18){
+            if(numeroDecimalAleatorio < this.prcSALlegan){
                 clienteTemporal.TomaServicio = true;
 
             } else {
@@ -571,7 +578,7 @@ namespace borrador_de_tp4
             // Redondear a dos decimales
             numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
 
-            if(numeroDecimalAleatorio < 0.33){
+            if(numeroDecimalAleatorio < this.prcSASalen){
                 clienteTemporal.TomaServicio = true;
 
             } else {

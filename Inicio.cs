@@ -15,6 +15,8 @@ namespace borrador_de_tp4
         private int n;
         private int filaDesde;
         private List<int> medias;
+        private double prcSALlegan;
+        private double prcSASalen;
         public pantalla()
         {
             InitializeComponent();
@@ -34,6 +36,8 @@ namespace borrador_de_tp4
             txtFinPrestamo.Text = 4.ToString();
             txtFinServicioAdicional.Text = 5.ToString();
             chkCajero5.Checked = false;
+            txtSAllegan.Text = 0.18.ToString();
+            txtPrcSalen.Text = 0.33.ToString();
         }
 
 
@@ -58,11 +62,13 @@ namespace borrador_de_tp4
             listaMedias.Add(int.Parse(txtFinServicioAdicional.Text));
 
             this.medias = listaMedias;
+            this.prcSALlegan = double.Parse(txtSAllegan.Text.ToString());
+            this.prcSASalen = double.Parse(txtPrcSalen.Text.ToString());
 
             //falta crear un objeto fila con la carga incial que tenga los datos de inicio y mandar eso por
             // parametro a la simulacion.
 
-            Simulacion f = new Simulacion(this.n , this.filaDesde, this.medias, chkCajero5.Checked);
+            Simulacion f = new Simulacion(this.n , this.filaDesde, this.medias, chkCajero5.Checked, this.prcSALlegan, this.prcSASalen);
             f.Show();
         }
     }

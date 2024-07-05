@@ -68,10 +68,10 @@
             this.titFinAtServAdicional = new System.Windows.Forms.Label();
             this.titServAdicionalEntran = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox23 = new System.Windows.Forms.TextBox();
+            this.txtSAllegan = new System.Windows.Forms.TextBox();
             this.ervAddCliSalen = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.txtPrcSalen = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -452,12 +452,12 @@
             this.label4.TabIndex = 53;
             this.label4.Text = "Porcentaje de Clientes que toman el servicio";
             // 
-            // textBox23
+            // txtSAllegan
             // 
-            this.textBox23.Location = new System.Drawing.Point(828, 441);
-            this.textBox23.Name = "textBox23";
-            this.textBox23.Size = new System.Drawing.Size(86, 20);
-            this.textBox23.TabIndex = 54;
+            this.txtSAllegan.Location = new System.Drawing.Point(828, 441);
+            this.txtSAllegan.Name = "txtSAllegan";
+            this.txtSAllegan.Size = new System.Drawing.Size(86, 20);
+            this.txtSAllegan.TabIndex = 54;
             // 
             // ervAddCliSalen
             // 
@@ -479,12 +479,12 @@
             this.label5.TabIndex = 56;
             this.label5.Text = "Porcentaje de Clientes que toman el servicio";
             // 
-            // textBox24
+            // txtPrcSalen
             // 
-            this.textBox24.Location = new System.Drawing.Point(828, 508);
-            this.textBox24.Name = "textBox24";
-            this.textBox24.Size = new System.Drawing.Size(86, 20);
-            this.textBox24.TabIndex = 57;
+            this.txtPrcSalen.Location = new System.Drawing.Point(828, 508);
+            this.txtPrcSalen.Name = "txtPrcSalen";
+            this.txtPrcSalen.Size = new System.Drawing.Size(86, 20);
+            this.txtPrcSalen.TabIndex = 57;
             // 
             // label6
             // 
@@ -621,10 +621,10 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox24);
+            this.Controls.Add(this.txtPrcSalen);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.ervAddCliSalen);
-            this.Controls.Add(this.textBox23);
+            this.Controls.Add(this.txtSAllegan);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.titServAdicionalEntran);
             this.Controls.Add(this.titFinAtServAdicional);
@@ -714,10 +714,10 @@
         private System.Windows.Forms.Label titFinAtServAdicional;
         private System.Windows.Forms.Label titServAdicionalEntran;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox23;
+        private System.Windows.Forms.TextBox txtSAllegan;
         private System.Windows.Forms.Label ervAddCliSalen;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox24;
+        private System.Windows.Forms.TextBox txtPrcSalen;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
