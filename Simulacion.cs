@@ -35,7 +35,7 @@ namespace borrador_de_tp4
         private bool tomaServicioCliente;
         private string estadoCliente;
 
-        private int numeroFilaRK = 0;
+        private int numeroFilaRK = 1;
 
         private RK rk = new RK();
 
@@ -77,6 +77,7 @@ namespace borrador_de_tp4
             
             string proxEvento = "";
             int tipoEvento = 0;
+            numeroFilaRK = nroLinea;
 
 
             bool esLlegada = false;
@@ -252,7 +253,7 @@ namespace borrador_de_tp4
                 Fila fila2 = fila1;
                 fila2.Reloj = proxTiempo;
                 fila2.Evento = proxEvento;
-                numeroFilaRK = nroLinea;
+                
                 FuncionCiclica(cantEventos - 1, fila2, nroFila, nroLinea + 1, contaRows);
 
 
