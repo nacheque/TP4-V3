@@ -44,6 +44,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.nroFila = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -129,7 +130,6 @@
             this.c78 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c79 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.c80 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdSimulacion)).BeginInit();
             this.SuspendLayout();
             // 
@@ -363,6 +363,16 @@
             this.label10.TabIndex = 15;
             this.label10.Text = "BANCO VILLA";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(673, 131);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(173, 42);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "MOSTRAR RK";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // nroFila
             // 
             this.nroFila.HeaderText = "nro fila";
@@ -472,7 +482,7 @@
             // 
             // c17
             // 
-            this.c17.HeaderText = "Porcentaje Tiempo Espera Cola Caja";
+            this.c17.HeaderText = "Promedio Tiempo Espera Cola Caja";
             this.c17.Name = "c17";
             this.c17.Width = 70;
             // 
@@ -490,7 +500,7 @@
             // 
             // c20
             // 
-            this.c20.HeaderText = "Porcentaje Tiempo Espera Cola At. Pers.";
+            this.c20.HeaderText = "Promedio Tiempo Espera Cola At. Pers.";
             this.c20.Name = "c20";
             this.c20.Width = 70;
             // 
@@ -508,7 +518,7 @@
             // 
             // c23
             // 
-            this.c23.HeaderText = "Porcentaje Tiempo Espera Cola Tarjetas";
+            this.c23.HeaderText = "Promedio Tiempo Espera Cola Tarjetas";
             this.c23.Name = "c23";
             this.c23.Width = 70;
             // 
@@ -526,7 +536,7 @@
             // 
             // c26
             // 
-            this.c26.HeaderText = "Porcentaje Tiempo Espera Cola Pl. Fijos";
+            this.c26.HeaderText = "Promedio Tiempo Espera Cola Pl. Fijos";
             this.c26.Name = "c26";
             this.c26.Width = 70;
             // 
@@ -544,7 +554,7 @@
             // 
             // c29
             // 
-            this.c29.HeaderText = "Porcentaje Tiempo Espera Cola Prestamos";
+            this.c29.HeaderText = "Promedio Tiempo Espera Cola Prestamos";
             this.c29.Name = "c29";
             this.c29.Width = 70;
             // 
@@ -562,7 +572,7 @@
             // 
             // c32
             // 
-            this.c32.HeaderText = "Porcentaje Tiempo Espera Cola Serv Add.";
+            this.c32.HeaderText = "Promedio Tiempo Espera Cola Serv Add.";
             this.c32.Name = "c32";
             this.c32.Width = 70;
             // 
@@ -872,16 +882,6 @@
             this.c80.Name = "c80";
             this.c80.Width = 50;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(673, 131);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(173, 42);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "MOSTRAR RK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // Simulacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -932,6 +932,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn nroFila;
         private System.Windows.Forms.DataGridViewTextBoxColumn c1;
         private System.Windows.Forms.DataGridViewTextBoxColumn c2;
@@ -1017,6 +1018,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn c78;
         private System.Windows.Forms.DataGridViewTextBoxColumn c79;
         private System.Windows.Forms.DataGridViewTextBoxColumn c80;
-        private System.Windows.Forms.Button button1;
     }
 }
