@@ -212,7 +212,7 @@ namespace borrador_de_tp4
                 //numeroDeFila = numero de fila actual
                 //nroFila = numero de fila desde
                 
-                if (nroFila <= nroLinea && (nroFila + 300) >= nroLinea || cantEventos == 1)
+                if (nroFila <= nroLinea && (nroFila + 300) >= nroLinea )
                 {
                     if (contaRows < 300)
                     {
@@ -229,22 +229,16 @@ namespace borrador_de_tp4
                             }
                         }
                         contaRows += 1;
-                    }
-                    //nroFila += 1;
+                    }  
                 }
-
-                /*if (nroFila >= this.filaDesde && nroFila <= (this.filaDesde + 300))
+                
+                if (cantEventos == 1)
                 {
                     LlenarTabla(fila1, fila1.Evento, fila1.Reloj);
-                    grdSimulacion.Rows[nroLinea].Cells["nroFila"].Value = nroFila;
-                    if (grdSimulacion.Columns.Contains("estadoCliente" + this.nroFilaCliente))
-                    {
-                        grdSimulacion.Rows[fila1.NroFila].Cells["estadoCliente" + this.nroFilaCliente].Value = this.estadoCliente;
-                        grdSimulacion.Rows[fila1.NroFila].Cells["tomaServicio" + this.nroFilaCliente].Value = this.tomaServicioCliente;
+                    grdSimulacion.Rows[301].Cells["nroFila"].Value = nroLinea;
 
-                    }
-                }*/
-
+                }
+                
                 Fila fila2 = fila1;
                 fila2.Reloj = proxTiempo;
                 fila2.Evento = proxEvento;
@@ -399,16 +393,17 @@ namespace borrador_de_tp4
                     grdSimulacion.Rows[ui].Cells["c12"].Value = fila.Llegada[4].ProximaLlegada.ToString();
                     
 
-                    //ACUMULADORES DE TIEMPO DE ESPERA
-                    grdSimulacion.Rows[ui].Cells["c16"].Value = fila.FinesAtencion[0].ACtiempoAtencion.ToString();
-                    grdSimulacion.Rows[ui].Cells["c19"].Value = fila.FinesAtencion[1].ACtiempoAtencion.ToString();
-                    grdSimulacion.Rows[ui].Cells["c22"].Value = fila.FinesAtencion[2].ACtiempoAtencion.ToString();
-                    grdSimulacion.Rows[ui].Cells["c25"].Value = fila.FinesAtencion[3].ACtiempoAtencion.ToString();
-                    grdSimulacion.Rows[ui].Cells["c28"].Value = fila.FinesAtencion[4].ACtiempoAtencion.ToString();
-                    grdSimulacion.Rows[ui].Cells["c31"].Value = fila.FinesAtencion[5].ACtiempoAtencion.ToString();
+                    //ACUMULADORES DE TIEMPO DE ESPERA                    //fila.Colas[tipoServicio].AcTiempoEspera
 
-                    //PORCENTAJE DE TIEMPO DE ESPERA EN COLA
-                    
+                    grdSimulacion.Rows[ui].Cells["c16"].Value = fila.Colas[0].AcTiempoEspera.ToString();
+                    grdSimulacion.Rows[ui].Cells["c19"].Value = fila.Colas[1].AcTiempoEspera.ToString();
+                    grdSimulacion.Rows[ui].Cells["c22"].Value = fila.Colas[2].AcTiempoEspera.ToString();
+                    grdSimulacion.Rows[ui].Cells["c25"].Value = fila.Colas[3].AcTiempoEspera.ToString();
+                    grdSimulacion.Rows[ui].Cells["c28"].Value = fila.Colas[4].AcTiempoEspera.ToString();
+                    grdSimulacion.Rows[ui].Cells["c31"].Value = fila.Colas[5].AcTiempoEspera.ToString();
+
+                    // PROMEDIOJE DE TIEMPO DE ESPERA EN COLA
+
                     grdSimulacion.Rows[ui].Cells["c17"].Value = fila.Colas[0].PrmTiempoEspera.ToString();
                     grdSimulacion.Rows[ui].Cells["c20"].Value = fila.Colas[1].PrmTiempoEspera.ToString();
                     grdSimulacion.Rows[ui].Cells["c23"].Value = fila.Colas[2].PrmTiempoEspera.ToString();
